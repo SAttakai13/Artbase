@@ -1,3 +1,5 @@
+using Artbase.Data;
+
 namespace Artbase
 {
     public class Program
@@ -8,6 +10,17 @@ namespace Artbase
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //These are for the database itself
+            builder.Services.Configure<ArtbaseDatabaseSettings>(
+                builder.Configuration.GetSection("Users"));
+
+            //These are all for the multiple tables
+            builder.Services.AddSingleton<UserAccountDAL>();
+            builder.Services.AddSingleton<UserProfileDAL>();
+            builder.Services.AddSingleton<UserPostDAL>();
+            builder.Services.AddSingleton<UserCommentDAL>();
+            builder.Services.AddSingleton<UserUploadDAL>();
 
             var app = builder.Build();
 
