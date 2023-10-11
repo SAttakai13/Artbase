@@ -4,11 +4,12 @@ namespace Artbase.Interfaces
 {
     public interface IUserPost
     {
-        void CreatePost(Post post);
-        void DeletePost(string? postId);
-        void EditPost(Post post);
-        IEnumerable<Post> GetPosts();
-        Post GetPostById(string? postId);
-        IEnumerable<Post> GetPostsByPostId(string? postId);
+        Task CreatePost(Post post);
+        Task DeletePost(string? postId);
+        Task EditPost(string? postId, Post post);
+        Task<IEnumerable<Post>> GetPosts();
+        Task<IEnumerable<Post>> GetPostsByPostId(string? postId);
+        Task<Post> GetPostById(string? postId);
+        
     }
 }

@@ -8,7 +8,8 @@ namespace Artbase.Models
     public class Comment
     {
         [BsonId]
-        public ObjectId _id {  get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "Message can't be empty, otherwise cancel")]
         public string message { get; set; }
@@ -20,7 +21,6 @@ namespace Artbase.Models
         public Comment() { }
         public Comment(string message, string? postID, string? userCommentID)
         {
-            _id = ObjectId.GenerateNewId();
             this.message = message;
             PostID = postID;
             UserCommentID = userCommentID;

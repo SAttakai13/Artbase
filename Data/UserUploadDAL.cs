@@ -1,33 +1,20 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Artbase.Data
 {
     public class UserUploadDAL : IUserUpload
     {
-        public void AddUpload(Upload upload)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly IMongoCollection<Upload> _uploadCollection;
 
-        public void DeleteUpload(string? userId)
+        public UserUploadDAL(IOptions<ArtbaseDatabaseSettings> artbaseSettings)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Upload> GetAllUploadsByUserId(string? userid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Upload GetUploadByUploadId(string? uploadId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Upload> GetUploads()
-        {
-            throw new NotImplementedException();
+            var mongoClient = new MongoClient(artbaseSettings.Value.ConnectionString);
+            var mongoDatabase = mongoClient.GetDatabase(artbaseSettings.Value.DatabaseName);
+            _uploadCollection = mongoDatabase.GetCollection<Upload>(
+                artbaseSettings.Value.UploadsCollectionName);
         }
     }
 }

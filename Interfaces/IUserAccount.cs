@@ -4,11 +4,10 @@ namespace Artbase.Interfaces
 {
     public interface IUserAccount
     {
-        void CreateAccout(Account account);
-        void RemoveAccount(string? userId);
-        void EditAccount(Account account);
-        IEnumerable<Account> GetAccounts();
-        IEnumerable<Account> SearchAccounts(string? name);
-        Account GetAccountByUserId(string? accountId);
+        Task CreateAccout(Account account);
+        Task RemoveAccount(string? accountId);
+        Task EditAccount(string? accountId, Account account);
+        Task<IEnumerable<Account>> GetAccounts();
+        Task<Account?> GetAccountByUserId(string? accountId);
     }
 }

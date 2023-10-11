@@ -10,7 +10,8 @@ namespace Artbase.Models
 
         //Rough idea of the Account process, currently researching user account login structures will be subject to change as the project progresses
         [BsonId]
-        public ObjectId _id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [BsonElement("UserName")]
         [Required(ErrorMessage = "Username is required")]
@@ -31,7 +32,6 @@ namespace Artbase.Models
         public Account() { }
         public Account(string userName, string password, string email, bool? emailVerified)
         {
-            _id = ObjectId.GenerateNewId();
             UserName = userName;
             Password = password;
             Email = email;

@@ -7,7 +7,8 @@ namespace Artbase.Models
     public class Profile
     {
         [BsonId]
-        public ObjectId _id {  get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -28,7 +29,6 @@ namespace Artbase.Models
         public Profile() { }
         public Profile(string name, string? birthDay, string? pronouns, string? bio)
         {
-            _id = ObjectId.GenerateNewId();
             Name = name;
             BirthDay = birthDay;
             Pronouns = pronouns;

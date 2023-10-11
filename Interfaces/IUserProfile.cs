@@ -4,11 +4,11 @@ namespace Artbase.Interfaces
 {
     public interface IUserProfile
     {
-        void AddProfile(Comment comment);
-        void DeleteProfile(string? commentId);
-        void EditProfile(Comment comment);
-        IEnumerable<Comment> GetProfile();
-        IEnumerable<Comment> SearchProfiles(string? name);
-        Comment GetProfileByUserId(string? commentid);
+        Task AddProfile(Comment comment);
+        Task DeleteProfile(string? commentId);
+        Task EditProfile(string? commentId, Comment comment);
+        Task<IEnumerable<Comment>> GetProfile();
+        Task<IEnumerable<Comment>> SearchProfiles(string? name);
+        Task<Comment> GetProfileByUserId(string? commentid);
     }
 }

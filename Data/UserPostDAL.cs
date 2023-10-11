@@ -1,38 +1,20 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Artbase.Data
 {
     public class UserPostDAL : IUserPost
     {
-        public void CreatePost(Post post)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly IMongoCollection<Post> _postCollection;
 
-        public void DeletePost(string? postId)
+        public UserPostDAL(IOptions<ArtbaseDatabaseSettings> artbaseSettings)
         {
-            throw new NotImplementedException();
-        }
-
-        public void EditPost(Post post)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Post GetPostById(string? postId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Post> GetPosts()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Post> GetPostsByPostId(string? postId)
-        {
-            throw new NotImplementedException();
+            var mongoClient = new MongoClient(artbaseSettings.Value.ConnectionString);
+            var mongoDatabase = mongoClient.GetDatabase(artbaseSettings.Value.DatabaseName);
+            _postCollection = mongoDatabase.GetCollection<Post>(
+                artbaseSettings.Value.PostsCollectionName);
         }
     }
 }

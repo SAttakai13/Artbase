@@ -4,11 +4,11 @@ namespace Artbase.Interfaces
 {
     public interface IUserUpload
     {
-        void AddUpload(Upload upload);
-        void DeleteUpload(string? userId);
-        IEnumerable<Upload> GetUploads();
-        IEnumerable<Upload> GetAllUploadsByUserId(string? userid);
+        Task AddUpload(Upload upload);
+        Task DeleteUpload(string? userId);
+        Task<IEnumerable<Upload>> GetUploads();
+        Task<IEnumerable<Upload>> GetAllUploadsByUserId(string? userid);
 
-        Upload GetUploadByUploadId(string? uploadId);
+        Task<Upload> GetUploadByUploadId(string? uploadId);
     }
 }

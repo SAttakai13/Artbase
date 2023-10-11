@@ -6,7 +6,8 @@ namespace Artbase.Models
     public class Post
     {
         [BsonId]
-        public ObjectId _id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         public string? Message { get; set; }
 
@@ -17,7 +18,6 @@ namespace Artbase.Models
         public Post() { }
         public Post(string? message, string? imageUrl)
         {
-            _id = ObjectId.GenerateNewId();
             Message = message;
             ImageUrl = imageUrl;
         }
