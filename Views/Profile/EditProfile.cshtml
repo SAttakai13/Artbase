@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Profile
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-bg-light">
+                Edit Profile
+            </h2>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="BirthDay"></label>
+        <input asp-for="BirthDay" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Pronouns"></label>
+        <input asp-for="Pronouns" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Bio"></label>
+        <input asp-for="Bio" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Profile</button>
+</form>
