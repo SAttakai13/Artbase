@@ -1,5 +1,23 @@
-﻿         @*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Profile>
+<div class="text-center">
+    <div class="container my-3">
+        <div class="row my-3 mx-2 justify-content-center">
+            @if (Model == null)
+            {
+                <h2></h2>
+            }
+            else
+            {
+                <h3>@TempData["success"]</h3>
+                foreach (Profile prof in Model)
+                {
+                    <div class="col my-3 mx-2 w-100 justify-content-center">
+                        <partial name="_ProfilePartialView.cshtml" for="@prof" />
+                    </div>
+
+                }
+                <h3>@TempData["Error"]</h3>
+            }
+        </div>
+    </div>
+</div>
