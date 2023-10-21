@@ -48,15 +48,6 @@ namespace Artbase.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddProfile(Profile prof)
-        {
-            if (ModelState.IsValid)
-            {
-                
-            }
-        }
-
 
     }
 }
