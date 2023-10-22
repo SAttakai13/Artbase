@@ -51,10 +51,7 @@ namespace Artbase.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProfile(Profile prof)
         {
-            if (ModelState.IsValid)
-            {
-                
-            }
+            return RedirectToAction("Index", "Home");
         }
 
 
