@@ -1,38 +1,55 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+using System.Xml.Linq;
 
 namespace Artbase.Data
 {
     public class UserUploadDAL : IUserUpload
     {
-        private readonly IMongoCollection<Upload> _uploadCollection;
+        private AppDbContext db;
 
-        public UserUploadDAL(IOptions<ArtbaseDatabaseSettings> artbaseSettings)
+        public UserUploadDAL(AppDbContext artbaseSettings)
         {
-            var mongoClient = new MongoClient(artbaseSettings.Value.ConnectionString);
-            var mongoDatabase = mongoClient.GetDatabase(artbaseSettings.Value.DatabaseName);
-            _uploadCollection = mongoDatabase.GetCollection<Upload>(
-                artbaseSettings.Value.UploadsCollectionName);
+            this.db = artbaseSettings;
         }
 
-        public async Task AddUpload(Upload upload) =>
-            await _uploadCollection.InsertOneAsync(upload);
-
-        public async Task DeleteUpload(string? uploadId) =>
-            await _uploadCollection.DeleteOneAsync(x => x.Id == uploadId);
-
-        //Filtering through the list will be used elsewhere, currently having issues with doing the filtering.
-        public Task<IEnumerable<Upload>> GetAllUploadsByUserId(string? userid)
+        public void AddUpload(Upload upload)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Upload> GetUploadByUploadId(string? uploadId) =>
-            await _uploadCollection.Find(x => x.Id == uploadId).FirstOrDefaultAsync();
+        public void DeleteUpload(int? userId)
+        {
+            throw new NotImplementedException();
+        }
 
-        public async Task<IEnumerable<Upload>> GetUploads() =>
-            await _uploadCollection.Find(_ => true).ToListAsync();
+        public IEnumerable<Upload> GetAllUploadsByUser(string? userid)
+        {
+            if (userid == null)
+                userid = "";
+
+            if (userid == "")
+                GetUploads();
+
+            IEnumerable<Upload> lstUserUploads = GetUploads().Where(p => p.UserID.Contains(userid));
+
+            if (lstUserUploads.Count() == 0)
+            {
+                return GetUploads();
+            }
+
+            return lstUserUploads;
+        }
+
+        public IEnumerable<Upload> GetUploads()
+        {
+            return db.Uploads.ToList();
+        }
+        public Upload GetUploadById(int? uploadId)
+        {
+            Upload? foundUpload = db.Uploads.Where(p => p.UploadId == uploadId).FirstOrDefault();
+            return foundUpload;
+        }
     }
 }

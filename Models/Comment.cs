@@ -1,15 +1,12 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Artbase.Models
 {
     public class Comment
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        [Key]
+        public int? CommentId { get; set; }
+
 
         [Required(ErrorMessage = "Message can't be empty, otherwise cancel")]
         public string message { get; set; }

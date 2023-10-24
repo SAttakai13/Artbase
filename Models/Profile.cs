@@ -1,14 +1,11 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Artbase.Models
 {
     public class Profile
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        [Key]
+        public int? ProfileId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -19,11 +16,9 @@ namespace Artbase.Models
 
         public string? Bio {  get; set; }
 
-        public string? PostId {  get; set; }
-
+        [MaxLength(450)]
         public string? UserId { get; set; }
 
-        public List<string>? friends { get; set; }
 
 
         public Profile() { }

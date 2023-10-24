@@ -4,11 +4,12 @@ namespace Artbase.Interfaces
 {
     public interface IUserComment
     {
-        Task AddComment(Comment comment);
-        Task DeleteComment(string? commentId);
-        Task EditComment(string? commentId, Comment comment);
-        Task<IEnumerable<Comment>> GetComments();
-        //Task<IEnumerable<Comment>> SearchCommentsByPostId(string? postname);
-        Task<Comment> GetCommentByUserId(string? commentid);
+        void AddComment(Comment comment);
+        void DeleteComment(int? commentId);
+        void EditComment(Comment comment);
+        IEnumerable<Comment> GetComments();
+        IEnumerable<Comment> GetCommentByUser(string? commentid);
+
+        Comment GetCommentById(int? commentId);
     }
 }

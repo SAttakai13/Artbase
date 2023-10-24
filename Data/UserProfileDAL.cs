@@ -1,45 +1,74 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 
 namespace Artbase.Data
 {
     public class UserProfileDAL : IUserProfile
     {
-        private readonly IMongoCollection<Profile> _profileCollection;
+        private AppDbContext db;
 
-        public UserProfileDAL(IOptions<ArtbaseDatabaseSettings> artbaseSettings)
+        public UserProfileDAL(AppDbContext artbaseSettings)
         {
-            var mongoClient = new MongoClient(artbaseSettings.Value.ConnectionString);
-            var mongoDatabase = mongoClient.GetDatabase(artbaseSettings.Value.DatabaseName);
-            _profileCollection = mongoDatabase.GetCollection<Profile>(
-                artbaseSettings.Value.ProfileCollectionName);
+            this.db = artbaseSettings;
         }
 
-        public async Task AddProfile(Profile profile) => 
-            await _profileCollection.InsertOneAsync(profile);
-
-        public async Task DeleteProfile(string? profileid) =>
-            await _profileCollection.DeleteOneAsync(x => x.Id == profileid);
-
-        public async Task EditProfile(string? profileid, Profile profile) =>
-            await _profileCollection.ReplaceOneAsync(profileid, profile);
-
-        public async Task<IEnumerable<Profile>> GetProfile() =>
-            await _profileCollection.Find(_ => true).ToListAsync();
-
-        public async Task<Profile> GetProfileByUserId(string? profileid) =>
-            await _profileCollection.Find(x => x.UserId == profileid).FirstOrDefaultAsync();
-
-
-
-        //Filtering through the list will be used elsewhere, currently having issues with doing the filtering.
-        public Task<IEnumerable<Profile>> SearchProfiles(string? name)
+        public void AddProfile(Profile profile)
         {
-            throw new NotImplementedException();
+            db.Profiles.Add(profile);
+            db.SaveChanges();
         }
 
+        public void DeleteProfile(int? profileid)
+        {
+            var foundprofile = GetProfileById(profileid);
+            if (foundprofile != null)
+            {
+                db.Profiles.Remove(foundprofile);
+                db.SaveChanges();
+            }
+        }
 
+        public void EditProfile(Profile profile)
+        {
+            db.Profiles.Update(profile);
+            db.SaveChanges();
+        }
+
+        public IEnumerable<Profile> GetProfile()
+        {
+            return db.Profiles.ToList();
+        }
+
+        public IEnumerable<Profile> GetProfileByName(string? name)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            if (name == "")
+            {
+                GetProfile();
+            }
+
+            IEnumerable<Profile> LstUserProfiles = GetProfile().Where(p => p.Name.ToLower().Contains(name.ToLower()));
+            if (LstUserProfiles.Count() == 0)
+            {
+                return GetProfile();
+            }
+
+            return LstUserProfiles;
+        }
+
+        public Profile GetProfileById(int? profileid)
+        {
+            Profile? foundProfile = db.Profiles.Where(p => p.ProfileId == profileid).FirstOrDefault();
+            return foundProfile;
+        }
+
+        public Profile SearchProfileByUserId(string? userid)
+        {
+            Profile? foundProfile = db.Profiles.Where(p => p.UserId == userid).FirstOrDefault();
+            return foundProfile;
+        }
     }
 }

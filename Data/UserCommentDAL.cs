@@ -1,42 +1,61 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 
 namespace Artbase.Data
 {
     public class UserCommentDAL : IUserComment
     {
-        private readonly IMongoCollection<Comment> _commentCollection;
+        private AppDbContext db;
 
-        public UserCommentDAL(IOptions<ArtbaseDatabaseSettings> artbaseSettings)
+        public UserCommentDAL(AppDbContext artbaseSettings)
         {
-            var mongoClient = new MongoClient(artbaseSettings.Value.ConnectionString);
-            var mongoDatabase = mongoClient.GetDatabase(artbaseSettings.Value.DatabaseName);
-            _commentCollection = mongoDatabase.GetCollection<Comment>(
-                artbaseSettings.Value.CommentsCollectionName);
+            this.db = artbaseSettings;
         }
 
-        public async Task AddComment(Comment comment) =>
-            await _commentCollection.InsertOneAsync(comment);
-
-        public async Task DeleteComment(string? commentId) => 
-            await _commentCollection.DeleteOneAsync(x => x.Id == commentId);
-
-        public async Task EditComment(string? commentId, Comment comment) => 
-            await _commentCollection.ReplaceOneAsync(commentId, comment);
-
-        public async Task<Comment> GetCommentByUserId(string? commentid) =>
-            await _commentCollection.Find(x => x.Id == commentid).FirstOrDefaultAsync();
-
-        public async Task<IEnumerable<Comment>> GetComments()=>
-            await _commentCollection.Find(_ => true).ToListAsync();
-
-
-        //Filter and bringing back a list of comments based on the post id, having trouble with that
-        public Task<IEnumerable<Comment>> SearchCommentsByPostId(string? postname)
+        public void AddComment(Comment comment)
         {
-            throw new NotImplementedException();
+            db.Comments.Add(comment);
+            db.SaveChanges();
+        }
+
+        public void DeleteComment(int? commentId)
+        {
+            var search = GetCommentById(commentId);
+            if (search != null)
+            {
+                db.Comments.Remove(search);
+                db.SaveChanges();
+            }
+        }
+
+        public void EditComment(Comment comment)
+        {
+            db.Update(comment);
+            db.SaveChanges();
+        }
+
+        public Comment GetCommentById(int? commentId)
+        {
+            Comment? foundComment = db.Comments.Where(p =>  p.CommentId == commentId).FirstOrDefault();
+            return foundComment;
+        }
+
+        public IEnumerable<Comment> GetCommentByUser(string? commentid)
+        {
+            if (commentid == null)
+                GetComments();
+
+            IEnumerable<Comment> ltsUserComments = GetComments().Where(p => p.UserCommentID.Equals(commentid)).ToList();
+
+            if (ltsUserComments.Count() == 0)
+                return GetComments();
+
+            return ltsUserComments;
+        }
+
+        public IEnumerable<Comment> GetComments()
+        {
+            return db.Comments.ToList();
         }
     }
 }

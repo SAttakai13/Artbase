@@ -1,13 +1,11 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace Artbase.Models
 {
     public class Post
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        [Key]
+        public int PostId { get; set; }
 
         public string? Message { get; set; }
 

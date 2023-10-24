@@ -1,4 +1,7 @@
 using Artbase.Data;
+using Artbase.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Artbase
 {
@@ -10,17 +13,14 @@ namespace Artbase
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddDefaultUI().AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
 
-            //These are for the database itself
-            builder.Services.Configure<ArtbaseDatabaseSettings>(
-                builder.Configuration.GetSection("Users"));
-
-            //These are all for the multiple tables
-            builder.Services.AddSingleton<UserAccountDAL>();
-            builder.Services.AddSingleton<UserProfileDAL>();
-            builder.Services.AddSingleton<UserPostDAL>();
-            builder.Services.AddSingleton<UserCommentDAL>();
-            builder.Services.AddSingleton<UserUploadDAL>();
+            builder.Services.AddRazorPages();
+            builder.Services.AddTransient<IUserPost, UserPostDAL>();
+            builder.Services.AddTransient<IUserProfile, UserProfileDAL>();
+            builder.Services.AddTransient<IUserComment, UserCommentDAL>();
+            builder.Services.AddTransient<IUserUpload, UserUploadDAL>();
 
             var app = builder.Build();
 
@@ -37,7 +37,9 @@ namespace Artbase
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

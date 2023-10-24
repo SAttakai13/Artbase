@@ -13,23 +13,17 @@ namespace Artbase.Controllers
             _profileService = profileService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AllProfiles()
-        {
-            return View(await _profileService.GetProfile());
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> OtherUserProfilePage(string? userId)
-        {
-            var profile = await _profileService.GetProfileByUserId(userId);
+        //[HttpGet]
+        //public IActionResult AllProfiles()
+        //{
             
-            if (profile is null)
-            {
-                return NotFound();
-            }
-            return View(profile);
-        }
+        //}
+
+        //[HttpGet]
+        //public IActionResult OtherUserProfilePage(string? userId)
+        //{
+            
+        //}
 
 
         public IActionResult Index()
@@ -48,11 +42,11 @@ namespace Artbase.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddProfile(Profile prof)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+        //[HttpPost]
+        //public IActionResult AddProfile(Profile prof)
+        //{
+            
+        //}
 
 
     }
