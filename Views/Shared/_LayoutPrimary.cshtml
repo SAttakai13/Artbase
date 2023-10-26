@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="~/css/PrimaryStyles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+
 </head>
 <body class="bg-black text-light">
     <div class="d-flex" id="wrapper">
@@ -31,13 +34,13 @@
             <!-- Top navigation-->
             <nav class="navbar navbar-expand-lg navbar-black bg-black"> <!--changed the background and dark grey doesn't work-->
                 <div class="container-fluid">
-                    <button class="btn btn-dark" id="sidebarToggle">Toggle Menu</button>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <button class="btn btn-dark mx-1" id="sidebarToggle"><i class="bi bi-list"></i></button>
+                    <button class="navbar-toggler mx-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li class="nav-item active"><a class="nav-link text-white" href="#!">Home</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-dark text-white" href="#!">Create Upload +</a></li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item active"><a class="nav-link text-white mx-1" asp-action="Index" asp-area="" asp-controller="Home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link btn btn-dark text-white mx-1" href="#!">Create Upload<i class="bi bi-plus"></i></a></li>
+                            <li class="nav-item dropdown mx-1">
                                 <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
                                     <partial name="_LoginPartial" />
@@ -57,7 +60,7 @@
             </div>                        
         </div>
     </div>
-    <footer class="border-top footer text-muted">
+    <footer class="footer my-1 text-muted">
         <div class="container">
             &copy; 2023 - Artbase - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
