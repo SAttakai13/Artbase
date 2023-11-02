@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Post
+@if (Model == null)
+{
+    <h2></h2>
+}
+else
+{
+    <div class="col mb-2">
+        @if (Model.Message != null)
+        {
+            <h4>@Model.Message</h4>
+        }
+        else
+        {
+            <h4></h4>
+        }
+        <img src="@Model.ImageUrl" alt=" " style="width:auto;height:450px;" />
+
+    </div>
 }

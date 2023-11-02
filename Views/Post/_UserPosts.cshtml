@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model UserProfileandPosts
+
+<div class="text-center">
+    <div class="container my-3">
+        <div class="row my-3 mx-2 justify-content-center">
+            @if (Model == null)
+            {
+                <h2></h2>
+            }
+            else
+            {
+                <h3>@TempData["success"]</h3>
+                <h4>@Model.UserProfile.Name</h4>
+                foreach (Post p in Model.PostsForUser)
+                {
+                    <div class="row g-2">
+                        <partial name="_PostPartialView.cshtml" for="@p" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 ﻿using Artbase.Interfaces;
 using Artbase.Models;
 using Microsoft.Extensions.Options;
+using System.ComponentModel.Design;
 
 namespace Artbase.Data
 {
@@ -15,32 +16,48 @@ namespace Artbase.Data
 
         public void CreatePost(Post post)
         {
-            throw new NotImplementedException();
+            db.Posts.Add(post);
+            db.SaveChanges();
         }
 
         public void DeletePost(int? postId)
         {
-            throw new NotImplementedException();
+            var search = GetPostById(postId);
+            if (search != null)
+            {
+                db.Posts.Remove(search);
+                db.SaveChanges();
+            }
         }
 
         public void EditPost(Post post)
         {
-            throw new NotImplementedException();
+            db.Update(post);
+            db.SaveChanges();
         }
 
         public Post GetPostById(int? postId)
         {
-            throw new NotImplementedException();
+            Post? foundPost = db.Posts.Where(p => p.PostId == postId).FirstOrDefault();
+            return foundPost;
         }
 
         public IEnumerable<Post> GetPostById(string? postId)
         {
-            throw new NotImplementedException();
+            if (postId == null)
+                GetPosts();
+
+            IEnumerable<Post> lstUserPosts = GetPosts().Where(p => p.PostId.Equals(postId)).ToList();
+
+            if (lstUserPosts.Count() == 0)
+                return GetPosts();
+
+            return lstUserPosts;
         }
 
         public IEnumerable<Post> GetPosts()
         {
-            throw new NotImplementedException();
+            return db.Posts.ToList();
         }
     }
 }

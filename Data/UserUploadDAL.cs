@@ -16,12 +16,18 @@ namespace Artbase.Data
 
         public void AddUpload(Upload upload)
         {
-            throw new NotImplementedException();
+            db.Uploads.Add(upload);
+            db.SaveChanges();
         }
 
         public void DeleteUpload(int? userId)
         {
-            throw new NotImplementedException();
+            var search = GetUploadById(userId);
+            if (search != null)
+            {
+                db.Uploads.Remove(search);
+                db.SaveChanges();
+            }
         }
 
         public IEnumerable<Upload> GetAllUploadsByUser(string? userid)

@@ -10,6 +10,39 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+body {
+    background-color: #E3E7F2;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    width: 400px;
+    border: none;
+    border-radius: 20px;
+    margin-top: 25%;
+}
+
+.btn-primary {
+    border: none;
+    border-radius: 8px;
+    width: 80px;
+    color: #DFEFFF;
+    transform: translateY(-22px);
+    background-color: #5778F9 !important;
+}
+
+    .btn-primary:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #007bff !important;
+    }
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

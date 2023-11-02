@@ -1,12 +1,94 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Artbase.Data;
+using Artbase.Interfaces;
+using Artbase.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Artbase.Controllers
 {
     public class PostController : Controller
     {
-        public IActionResult Index()
+        IUserPost Pos;
+        IUserProfile Prof;
+
+        public PostController(IUserPost pos, IUserProfile prof)
+        {
+            this.Pos = pos;
+            this.Prof = prof;
+        }
+
+        [HttpGet]
+        public IActionResult AddPost()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddPost(Post post)
+        {
+            if (ModelState.IsValid)
+            {
+                post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Pos.CreatePost(post);
+                return RedirectToAction("UserProfilePage", "Profile");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult EditPost(int postId)
+        {
+            Post postFound = Pos.GetPostById(postId);
+            if (postFound == null)
+                ViewData["Error"] = "Error post not found";
+            return RedirectToAction("ViewAllPosts", "Post");
+        }
+
+        [HttpPost]
+        public IActionResult EditPost(Post post)
+        {
+            if (ModelState.IsValid)
+            {
+                post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Pos.EditPost(post);
+                return RedirectToAction("UserProfilePage", "Profile");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult DeletePost(int? postid)
+        {
+            string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Pos.GetPostById(postid) == null)
+            {
+                ModelState.AddModelError("PostID", "Post not found");
+            }
+
+            if (ModelState.IsValid)
+            {
+                Pos.DeletePost(postid);
+            }
+
+            return RedirectToAction("UserProfilePage", "Profile");
+        }
+
+        public IActionResult ViewAllImages(string? id)
+        {
+            var imageModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == id).ToList(), Prof.SearchProfileByUserId(id));
+
+            if (imageModel == null)
+            {
+                ViewData["Error"] = "Couldn't find posts!";
+                return RedirectToAction("ViewAllPosts", "Post");
+            }
+
+            return View(imageModel);
+        }
+
+        public IActionResult ViewAllPosts()
+        {
+            return View(Pos.GetPosts());
         }
     }
 }
