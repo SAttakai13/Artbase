@@ -39,7 +39,7 @@ namespace Artbase.Data
             return db.Profiles.ToList();
         }
 
-        public IEnumerable<Profile> GetProfileByName(string? name)
+        public IEnumerable<Profile> FilterProfiles(string name)
         {
             if (name == null)
             {
@@ -65,7 +65,7 @@ namespace Artbase.Data
             return foundProfile;
         }
 
-        public Profile SearchProfileByUserId(string? userid)
+        public Profile GetProfileByUserId(string? userid)
         {
             Profile? foundProfile = db.Profiles.Where(p => p.UserId == userid).FirstOrDefault();
             return foundProfile;

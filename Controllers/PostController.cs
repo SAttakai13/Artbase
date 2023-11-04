@@ -75,7 +75,7 @@ namespace Artbase.Controllers
 
         public IActionResult ViewAllImages(string? id)
         {
-            var imageModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == id).ToList(), Prof.SearchProfileByUserId(id));
+            var imageModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == id).ToList(), Prof.GetProfileByUserId(id));
 
             if (imageModel == null)
             {

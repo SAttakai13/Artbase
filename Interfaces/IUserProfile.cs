@@ -9,8 +9,8 @@ namespace Artbase.Interfaces
         void EditProfile(Profile profile);
         IEnumerable<Profile> GetProfile();
         
-        IEnumerable<Profile> GetProfileByName(string? name);
-        Profile SearchProfileByUserId(string? userid);
+        IEnumerable<Profile> FilterProfiles(string? name);
+        Profile GetProfileByUserId(string? userid);
         Profile GetProfileById(int? profileid);
     }
 }
