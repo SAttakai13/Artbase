@@ -36,9 +36,9 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditPost(int postId)
+        public IActionResult EditPost(int id)
         {
-            Post postFound = Pos.GetPostById(postId);
+            Post postFound = Pos.GetPostById(id);
             if (postFound == null)
                 ViewData["Error"] = "Error post not found";
             return RedirectToAction("ViewAllPosts", "Post");
@@ -57,17 +57,17 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeletePost(int? postid)
+        public IActionResult DeletePost(int? id)
         {
             string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (Pos.GetPostById(postid) == null)
+            if (Pos.GetPostById(id) == null)
             {
                 ModelState.AddModelError("PostID", "Post not found");
             }
 
             if (ModelState.IsValid)
             {
-                Pos.DeletePost(postid);
+                Pos.DeletePost(id);
             }
 
             return RedirectToAction("UserProfilePage", "Profile");

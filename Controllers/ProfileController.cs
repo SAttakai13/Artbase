@@ -1,6 +1,7 @@
 ﻿using Artbase.Data;
 using Artbase.Interfaces;
 using Artbase.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,8 +14,6 @@ namespace Artbase.Controllers
     {
         IUserPost Pos;
         IUserProfile Prof;
-        SignInManager<IdentityUser> SignInManager;
-        UserManager<IdentityUser> UserManager;
 
 
 
@@ -48,6 +47,8 @@ namespace Artbase.Controllers
 
             
         }
+
+        [Authorize(Roles = "Admin,User")]
         public IActionResult UserProfilePage()
         {
             if (User.Identity.IsAuthenticated)
@@ -88,6 +89,7 @@ namespace Artbase.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult AddProfile(Profile prof)
         {
             if (User.Identity.IsAuthenticated)
@@ -118,6 +120,7 @@ namespace Artbase.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult EditProfile(Profile prof)
         {
             if (ModelState.IsValid)
