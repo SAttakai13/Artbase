@@ -17,11 +17,11 @@ namespace Artbase.Controllers
             this.Prof = prof;
         }
 
-        [HttpGet]
-        public IActionResult AddPost()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult AddPost()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public IActionResult AddPost(Post post)

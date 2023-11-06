@@ -7,21 +7,21 @@
 }
 else
 {
-    <section class="h-100 gradient-custom-2">
-        <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+    <section class="gradient-custom-2 justify-content-center">
+        <div class="container m-2 p-4 justify-content-center">
+            <div class="row d-flex justify-content-center align-items-center" style="margin-right:300px;">
                 <div class="col col-lg-9 col-xl-7">
-                    <div class="card">
+                    <div class="card" style="width:850px;">
                         <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-2 d-flex flex-column" style="width: 150px;">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                      style="width: 150px; z-index: 1">
-                                <a class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;" asp-action="EditProfile" asp-controller="Profile" asp-area="" asp-route-id="@Model.UserProfile.ProfileId">
-                                    Edit profile
+                                <a class="btn btn-outline-dark mx-2" data-mdb-ripple-color="dark" style="z-index: 1; width:50px; margin-top:45px;" asp-action="EditProfile" asp-controller="Profile" asp-area="" asp-route-id="@Model.UserProfile.ProfileId">
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>                                
                             </div>
-                            <div class="ms-3" style="margin-top: 130px;">
+                            <div class="ms-3" style="margin-top: 75px;">
                                 <h5>@Model.UserProfile.Name</h5>
                                 <p>@Model.UserProfile.Pronouns</p>
                                 <p>@Model.UserProfile.BirthDay</p>
@@ -50,18 +50,53 @@ else
                                     <p class="font-italic mb-1">@Model.UserProfile.Bio</p>
                                 </div>
                             </div>
+                            <div class="mb-5">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Make post
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form method="post" asp-controller="Post" asp-action="AddPost" asp-area="">
+                                                <div class="modal-body">
+                                                    <div class="m-2">
+                                                        <label asp-for="@Model.UserPost.ImageUrl"></label>
+                                                        <input asp-for="@Model.UserPost.ImageUrl" class="form-control" style="width: 450px;"/>
+                                                    </div>
+                                                    <div class="m-2">
+                                                        <label asp-for="@Model.UserPost.Message"></label>
+                                                        <input asp-for="@Model.UserPost.Message" class="form-control" style="width: 450px;"/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100px;">Close</button>
+                                                    <button type="submit" class="btn btn-primary mt-5" style="width:150px;">Add Post</button>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!--Posts-->
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Recent photos</p>
-                                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+                                <p class="lead fw-normal mb-0">Recent Posts</p>
+                                @foreach (Post p in Model.PostsForUser)
+                                {
+                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" />
+                                    <a asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-success"><i class="bi bi-pencil-square">Edit Post</i></a>
+                                    <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-danger"><i class="bi bi-pencil-square">Delete Post</i></a>
+                                }
                             </div>
-                            @foreach(Post p in Model.PostsForUser)
-                            {
-                                <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" />
-                                <a asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-success"><i class="bi bi-pencil-square">Edit Post</i></a>
-                                <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-danger"><i class="bi bi-pencil-square">Delete Post</i></a>
-                            }
+                            
                         </div>
                     </div>
                 </div>

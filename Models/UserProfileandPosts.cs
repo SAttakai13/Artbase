@@ -6,6 +6,7 @@
 
 
         public Profile UserProfile { get; set; }
+        public Post UserPost { get; set; }
 
         public UserProfileandPosts() { }
         public UserProfileandPosts(IEnumerable<Post> posts, Profile prof)
