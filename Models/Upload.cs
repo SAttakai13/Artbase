@@ -8,18 +8,19 @@ namespace Artbase.Models
         [Key]
         public int? UploadId { get; set; }
 
-        [Required]
-        public string fileUrl { get; set; }
+        
+        public string? fileUrl { get; set; }
+        public byte[] fileContent { get; set; }
 
 
-        [Required]
+        
         public string? UserID {  get; set; }
 
         public Upload() { }
-        public Upload(string fileUrl, string? userID)
+        public Upload(string? fileUrl, string? userID)
         {            
             this.fileUrl = fileUrl;
-            UserID = userID;
+            this.UserID = userID;
         }
     }
 }

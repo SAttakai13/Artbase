@@ -42,7 +42,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li class="nav-item active"><a class="nav-link text-white mx-1" asp-action="Index" asp-area="" asp-controller="Home">Home</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-dark text-white mx-1" href="#!">Create Upload<i class="bi bi-plus"></i></a></li>
+                            <li class="nav-item"><a class="nav-link btn btn-dark text-white mx-1" asp-action="AddUpload" asp-area="" asp-controller="Upload">Upload</a></li>
                             <li class="nav-item dropdown mx-1">
 
                                 @if (SignInManager.IsSignedIn(User))
@@ -80,6 +80,7 @@
     <!-- Core theme JS-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/UploadScript.js"></script>
     <script src="~/js/scripts.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

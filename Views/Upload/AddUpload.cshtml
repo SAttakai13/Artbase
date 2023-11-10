@@ -1,5 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<form method="post">
+    <div class="m-2">
+        <label>Upload File:</label>
+        <input asp-for="file" id="FileUrl" name="FileUrl" class="form-control" style="width: 450px;" type="file"/>
+    </div>
+    <button type="submit" class="btn btn-primary mt-5" id="AddUpload" name="AddUpload">Upload</button>
+</form>
+<!--<script src="~/js/UploadScript.js"></script>-->

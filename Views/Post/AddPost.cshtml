@@ -1,0 +1,12 @@
+﻿@model Post
+<form method="post" asp-controller="Post" asp-action="AddPost" asp-area="">
+    <div class="m-2">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="form-control" style="width: 450px;" />
+    </div>
+    <div class="m-2">
+        <label asp-for="Message"></label>
+        <input asp-for="Message" class="form-control" style="width: 450px;" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-5">Add Post</button>
+</form>

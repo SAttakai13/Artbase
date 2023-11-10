@@ -5,16 +5,18 @@
 }
 else
 {
-    <div class="col mb-2">
-        @if (Model.Message != null)
-        {
-            <h4>@Model.Message</h4>
-        }
-        else
-        {
-            <h4></h4>
-        }
-        <img src="@Model.ImageUrl" alt=" " style="width:auto;height:450px;" />
-
+    <div>
+        <div class="mb-2">
+            @if (Model.Message != null)
+            {
+                <h4>@Model.Message</h4>
+            }
+            else
+            {
+                <h4></h4>
+            }
+            <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width:auto;height:450px;" />
+        </div>
     </div>
+    
 }

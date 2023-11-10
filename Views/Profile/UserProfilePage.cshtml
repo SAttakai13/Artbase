@@ -51,51 +51,54 @@ else
                                 </div>
                             </div>
                             <div class="mb-5">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Make post
-                                </button>
+                                <a asp-action="AddPost" asp-controller="Post" asp-area="" class="btn btn-outline-success mx-1">Add Post</a>
+                            </div>
+                            <p class="lead fw-normal mb-0">Recent Posts</p>
+                            <!--Posts-->
+                            <div class="container">
+                                <div class="col d-flex justify-content-between align-items-center mb-4">
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    @foreach (Post p in Model.PostsForUser)
+                                    {
+                                        <div class="row mb-2 px-2">
+                                            <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" />
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-success mx-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form method="post" asp-controller="Post" asp-action="EditPost" asp-area="">
+                                                            <div class="modal-body">
+                                                                <div class="m-2">
+                                                                    <label asp-for="@p.ImageUrl"></label>
+                                                                    <input asp-for="@p.ImageUrl" class="form-control" style="width: 450px;" />
+                                                                </div>
+                                                                <div class="m-2">
+                                                                    <label asp-for="@p.Message"></label>
+                                                                    <input asp-for="@p.Message" class="form-control" style="width: 450px;" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100px;">Close</button>
+                                                                <button type="submit" class="btn btn-primary mt-5" style="width:150px;">Save Post</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <form method="post" asp-controller="Post" asp-action="AddPost" asp-area="">
-                                                <div class="modal-body">
-                                                    <div class="m-2">
-                                                        <label asp-for="@Model.UserPost.ImageUrl"></label>
-                                                        <input asp-for="@Model.UserPost.ImageUrl" class="form-control" style="width: 450px;"/>
-                                                    </div>
-                                                    <div class="m-2">
-                                                        <label asp-for="@Model.UserPost.Message"></label>
-                                                        <input asp-for="@Model.UserPost.Message" class="form-control" style="width: 450px;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100px;">Close</button>
-                                                    <button type="submit" class="btn btn-primary mt-5" style="width:150px;">Add Post</button>
-                                                </div>
-                                            </form>
-                                            
+                                            <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-outline-danger mx-1"><i class="bi bi-trash3"></i></a>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
-
-                            <!--Posts-->
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Recent Posts</p>
-                                @foreach (Post p in Model.PostsForUser)
-                                {
-                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" />
-                                    <a asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-success"><i class="bi bi-pencil-square">Edit Post</i></a>
-                                    <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-danger"><i class="bi bi-pencil-square">Delete Post</i></a>
-                                }
-                            </div>
+                            
                             
                         </div>
                     </div>
