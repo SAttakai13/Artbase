@@ -1,8 +1,14 @@
-﻿<form method="post">
-    <div class="m-2">
-        <label>Upload File:</label>
-        <input asp-for="file" id="FileUrl" name="FileUrl" class="form-control" style="width: 450px;" type="file"/>
+﻿@model FileUpload
+<form asp-action="AddUpload" asp-controller="Upload" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="File"></label>
+        <input asp-for="File" type="file" class="form-control" style="width: 450px;" />
+        <span asp-validation-for="File" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary mt-5" id="AddUpload" name="AddUpload">Upload</button>
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary" style="width: 150px;">Upload</button>
+    </div>
 </form>
 <!--<script src="~/js/UploadScript.js"></script>-->

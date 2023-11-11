@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Post>
+﻿@model IEnumerable<Upload>
 <div class="text-center">
     <div class="container my-3">
         <div class="row my-3 mx-2">
@@ -9,10 +9,10 @@
             else
             {
                 <h3>@TempData["success"]</h3>
-                foreach (Post pos in Model)
+                foreach (Upload file in Model)
                 {
                     <div class="col my-3 mx-2 w-100 justify-content-left">
-                        <partial name="_PostPartialView.cshtml" for="@pos" />
+                        <partial name="_UploadPartialView.cshtml" for="@file" />
                     </div>
 
                 }

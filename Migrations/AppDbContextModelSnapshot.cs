@@ -42,7 +42,7 @@ namespace Artbase.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Artbase.Models.Post", b =>
@@ -64,7 +64,7 @@ namespace Artbase.Migrations
 
                     b.HasKey("PostId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Artbase.Models.Profile", b =>
@@ -94,7 +94,7 @@ namespace Artbase.Migrations
 
                     b.HasKey("ProfileId");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Artbase.Models.Upload", b =>
@@ -117,7 +117,7 @@ namespace Artbase.Migrations
 
                     b.HasKey("UploadId");
 
-                    b.ToTable("Uploads");
+                    b.ToTable("Uploads", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

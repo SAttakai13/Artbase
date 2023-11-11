@@ -31,27 +31,50 @@ namespace Artbase.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUpload(IFormFile file)
+        public IActionResult AddUpload(FileUpload filemod)
         {
-            //objs.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //dal.AddUpload(objs);
-            //Ok();
-            if (file != null && file.Length > 0)
+            if (filemod.File != null && filemod.File.Length > 0)
             {
+                using (var filestream = filemod.File.OpenReadStream())
                 using (var memoryStream = new MemoryStream())
                 {
+                    filestream.CopyTo(memoryStream);
+                    var fileContentBytes = memoryStream.ToArray();
+
                     var fileModel = new Upload
                     {
-                        fileUrl = file.FileName,
-                        fileContent = memoryStream.ToArray(),
+                        fileType = filemod.File.ContentType,
+                        fileUrl = filemod.File.FileName,
+                        fileContent = fileContentBytes,
                         UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     };
-
-                    Up.AddUpload(fileModel);
-                    return RedirectToAction("UserProfilePage", "Profile");
+                    if (ModelState.IsValid)
+                    {
+                        Up.AddUpload(fileModel);
+                        Ok();
+                        return RedirectToAction("UserProfilePage", "Profile");
+                    }                    
                 }
             }
             return View();
         }
+
+        //Still need to read from the database
+        public IActionResult ViewAllUploads()
+        {
+            //IEnumerable<Upload> files = Up.GetUploads();
+            //var result = new List<File>();
+
+            //foreach (Upload file in files)
+            //{
+            //    if (files != null)
+            //    {
+            //        var save = File(file.fileContent, file.fileType);
+            //        result.Add(save);
+            //    }
+            //}
+            return View(Up.GetUploads());
+        }
+
     }
 }
