@@ -62,17 +62,6 @@ namespace Artbase.Controllers
         //Still need to read from the database
         public IActionResult ViewAllUploads()
         {
-            //IEnumerable<Upload> files = Up.GetUploads();
-            //var result = new List<File>();
-
-            //foreach (Upload file in files)
-            //{
-            //    if (files != null)
-            //    {
-            //        var save = File(file.fileContent, file.fileType);
-            //        result.Add(save);
-            //    }
-            //}
             return View(Up.GetUploads());
         }
 
