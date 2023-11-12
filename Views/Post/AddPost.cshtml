@@ -1,5 +1,6 @@
 ﻿@model Post
 <form method="post" asp-controller="Post" asp-action="AddPost" asp-area="">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="m-2">
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form-control" style="width: 450px;" />

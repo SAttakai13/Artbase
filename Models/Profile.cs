@@ -10,9 +10,12 @@ namespace Artbase.Models
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please add your name")]
         public string? BirthDay { get; set; }
 
+        [Required(ErrorMessage = "Please input your Pronouns")]
         public string? Pronouns { get; set; }
+        [Required(ErrorMessage = "Please add your bio")]
 
         public string? Bio {  get; set; }
 

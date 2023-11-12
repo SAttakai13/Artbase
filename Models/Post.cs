@@ -7,6 +7,7 @@ namespace Artbase.Models
         [Key]
         public int PostId { get; set; }
 
+        
         public string? Message { get; set; }
 
         public string? ImageUrl { get; set; }
