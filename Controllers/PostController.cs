@@ -25,7 +25,7 @@ namespace Artbase.Controllers
 
         [HttpPost]
         public IActionResult AddPost(Post post)
-        {
+        {            
             if (ModelState.IsValid)
             {
                 post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -5,17 +5,17 @@
 }
 else
 {
-    <div style="width:fit-content;">
-        <div class="mb-2 justify-content-center" style="width:fit-content;">
+    <div class="container my-1" style="width:fit-content;">
+        <div class="col mb-2 justify-content-center" style="width:fit-content;">
             @if (Model.Message != null)
             {
-                <h6 style="width:fit-content;" class="mb-4">@Model.Message</h6>
+                <h6 style="width:fit-content;" class="mb-4 row">@Model.Message</h6>
             }
             else
             {
                 <h6></h6>
             }
-            <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width:auto;height:350px;" />
+            <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width:auto;height:350px;" class="row"/>
         </div>
     </div>
     

@@ -12,6 +12,14 @@
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@font-face {
+    font-family: PrettyFont;
+    src: url(/css/Blantik.otf);
+}
+
+.MainFont {
+    font-family: PrettyFont;
+}
 
 body {
     background-color: #E3E7F2;
