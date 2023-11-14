@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Profile>
 <div class="text-center">
-    <div class="container my-3">
-        <div class="row my-3 mx-2">
+    <div class="col">
+        <div class="row">
             @if (Model == null)
             {
                 <h2></h2>
@@ -11,10 +11,9 @@
                 <h3>@TempData["success"]</h3>
                 foreach (Profile prof in Model)
                 {
-                    <div class="col my-3 mx-2 w-100 justify-content-left">
+                    <div class="align-content-center justify-content-center p-2">
                         <partial name="_ProfilePartialView.cshtml" for="@prof" />
                     </div>
-
                 }
                 <h3>@TempData["Error"]</h3>
             }

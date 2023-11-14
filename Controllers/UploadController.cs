@@ -59,11 +59,17 @@ namespace Artbase.Controllers
             return View();
         }
 
+
+
+
+
         //Still need to read from the database
         public IActionResult ViewAllUploads()
         {
             return View(Up.GetUploads());
         }
+
+        
 
     }
 }

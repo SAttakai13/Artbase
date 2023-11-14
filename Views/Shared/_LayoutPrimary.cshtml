@@ -25,12 +25,13 @@
                 <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Artbase</a>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="Posts">My Gallery</a>
-                
+                @if(SignInManager.IsSignedIn(User)){
+                    <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="ViewAllPosts">Dashboard</a>
+                }   
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Profile" asp-action="UserProfilePage">Profile</a>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Upload" asp-action="ViewAllUploads">My Gallery</a>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>            
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -55,16 +56,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
                                     <partial name="_LoginPartial" class="text-light"/>
-                                    @* 
-
-                                    <a class="dropdown-item" href="#!">Something else here</a> *@
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="container-fluid mx-5 my-1">
+            <div class="container-fluid mx-5 my-1 overflow-auto">
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>

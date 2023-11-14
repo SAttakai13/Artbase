@@ -5,17 +5,17 @@
 }
 else
 {
-    <div>
-        <div class="mb-2">
+    <div style="width:fit-content;">
+        <div class="mb-2 justify-content-center" style="width:fit-content;">
             @if (Model.Message != null)
             {
-                <h4>@Model.Message</h4>
+                <h6 style="width:fit-content;" class="mb-4">@Model.Message</h6>
             }
             else
             {
-                <h4></h4>
+                <h6></h6>
             }
-            <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width:auto;height:450px;" />
+            <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width:auto;height:350px;" />
         </div>
     </div>
     
