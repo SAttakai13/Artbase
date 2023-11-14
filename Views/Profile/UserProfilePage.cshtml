@@ -11,15 +11,13 @@ else
         <div class="container m-2 p-4 justify-content-center">
             <div class="row d-flex justify-content-center align-items-center" style="margin-right:300px;">
                 <div class="col col-lg-9 col-xl-7">
-                    <div class="card" style="width:850px;">
+                    <div class="card" style="width:650px;">
                         <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-2 d-flex flex-column" style="width: 150px;">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                      style="width: 150px; z-index: 1">
-                                <a class="btn btn-outline-dark mx-2" data-mdb-ripple-color="dark" style="z-index: 1; width:50px; margin-top:45px;" asp-action="EditProfile" asp-controller="Profile" asp-area="" asp-route-id="@Model.UserProfile.ProfileId">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>                                
+                                                                
                             </div>
                             <div class="ms-3" style="margin-top: 75px;">
                                 <h5>@Model.UserProfile.Name</h5>
@@ -27,58 +25,66 @@ else
                                 <p>@Model.UserProfile.BirthDay</p>
                             </div>
                         </div>
-                        <div class="card-body p-4 text-black container">
-                            <div class="mb-5 col">
-                                <p class="lead fw-normal mb-1 row">Bio</p>
-                                <div class="p-4 row" style="background-color: #f8f9fa;">
+                        <div class="card-body p-4 text-black container  justify-content-center align-content-center">
+                            <div class="mb-5">
+                                <div class="row">
+                                    <p class="lead fw-normal mb-1 col col-lg">Bio</p>
+                                    <a class="btn btn-outline-dark mx-2 col-md-auto" data-mdb-ripple-color="dark" style="z-index: 1; width:50px;" asp-action="EditProfile" asp-controller="Profile" asp-area="" asp-route-id="@Model.UserProfile.ProfileId">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                                <div class="p-4 mt-3 row" style="background-color: #f8f9fa;">
                                     <p class="font-italic mb-1">@Model.UserProfile.Bio</p>
                                 </div>
+                                <div class="my-3 row">
+                                    <a asp-action="AddPost" asp-controller="Post" asp-area="" class="btn btn-outline-success mx-1" style="width:fit-content">Add Post</a>
+                                </div>
                             </div>
-                            <div class="mb-5">
-                                <a asp-action="AddPost" asp-controller="Post" asp-area="" class="btn btn-outline-success mx-1">Add Post</a>
-                            </div>
-                            <p class="lead fw-normal mb-0">Recent Posts</p>
+                            
+                            
                             <!--Posts-->
-                            <div class="container">
-                                <div class="col d-flex justify-content-between align-items-center mb-4">
-
+                            <div class="container justify-content-center align-content-center p-3">
+                                <p class="row lead fw-normal mb-2">Recent Posts</p>
+                                <div class="row container d-flex justify-content-center align-content-center">
                                     @foreach (Post p in Model.PostsForUser)
                                     {
-                                        <div class="col mb-2 px-2">
-                                            <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row" style="width:fit-content"/>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-outline-success mx-1 row" style="width:50px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="row p-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
+                                            <div class="container justify-content-center align-content-center" style="width:fit-content">
+                                                <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row" style="width:fit-content" />
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-outline-success mx-1 row" style="width:fit-content;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form method="post" asp-controller="Post" asp-action="EditPost" asp-area="">
+                                                                <div class="modal-body">
+                                                                    <div class="m-2">
+                                                                        <label asp-for="@p.ImageUrl"></label>
+                                                                        <input asp-for="@p.ImageUrl" class="form-control" style="width: 450px;" />
+                                                                    </div>
+                                                                    <div class="m-2">
+                                                                        <label asp-for="@p.Message"></label>
+                                                                        <input asp-for="@p.Message" class="form-control" style="width: 450px;" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100px;">Close</button>
+                                                                    <button type="submit" class="btn btn-primary mt-5" style="width:150px;">Save Post</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <form method="post" asp-controller="Post" asp-action="EditPost" asp-area="">
-                                                            <div class="modal-body">
-                                                                <div class="m-2">
-                                                                    <label asp-for="@p.ImageUrl"></label>
-                                                                    <input asp-for="@p.ImageUrl" class="form-control" style="width: 450px;" />
-                                                                </div>
-                                                                <div class="m-2">
-                                                                    <label asp-for="@p.Message"></label>
-                                                                    <input asp-for="@p.Message" class="form-control" style="width: 450px;" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100px;">Close</button>
-                                                                <button type="submit" class="btn btn-primary mt-5" style="width:150px;">Save Post</button>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
+                                                <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="row btn btn-outline-danger mx-1" style="width:fit-content;"><i class="bi bi-trash3"></i></a>
                                             </div>
-                                            <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="row btn btn-outline-danger mx-1" style="width:50px;"><i class="bi bi-trash3"></i></a>
-                                        </div>
+                                        </div>                                        
                                     }
                                 </div>
                             </div>
