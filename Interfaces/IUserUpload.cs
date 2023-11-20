@@ -7,7 +7,7 @@ namespace Artbase.Interfaces
         void AddUpload(Upload upload);
         void DeleteUpload(int? userId);
         IEnumerable<Upload> GetUploads();
-        IEnumerable<Upload> GetAllUploadsByUser(string? userid);
+        IEnumerable<Upload> GetUploadsByUserId(string? userid);
 
         Upload GetUploadById(int? uploadId);
     }

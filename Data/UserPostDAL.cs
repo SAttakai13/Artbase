@@ -32,7 +32,7 @@ namespace Artbase.Data
 
         public void EditPost(Post post)
         {            
-            db.Update(post);
+            db.Posts.Update(post);
             db.SaveChanges();
         }
 
@@ -42,12 +42,15 @@ namespace Artbase.Data
             return foundPost;
         }
 
-        public IEnumerable<Post> GetPostById(string? postId)
+        public IEnumerable<Post> GetPostsByUserId(string? userid)
         {
-            if (postId == null)
+            if (userid == null)
+                userid = "";
+
+            if (userid == "")
                 GetPosts();
 
-            IEnumerable<Post> lstUserPosts = GetPosts().Where(p => p.PostId.Equals(postId)).ToList();
+            IEnumerable<Post>? lstUserPosts = GetPosts().Where(p => p.UserId == userid).ToList();
 
             if (lstUserPosts.Count() == 0)
                 return GetPosts();

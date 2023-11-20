@@ -30,7 +30,7 @@ namespace Artbase.Data
 
         public void EditProfile(Profile profile)
         {
-            db.Update(profile);
+            db.Profiles.Update(profile);
             db.SaveChanges();
         }
 

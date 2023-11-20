@@ -34,7 +34,7 @@ namespace Artbase.Data
             }
         }
 
-        public IEnumerable<Upload> GetAllUploadsByUser(string? userid)
+        public IEnumerable<Upload> GetUploadsByUserId(string? userid)
         {
             if (userid == null)
                 userid = "";
@@ -42,7 +42,7 @@ namespace Artbase.Data
             if (userid == "")
                 GetUploads();
 
-            IEnumerable<Upload> lstUserUploads = GetUploads().Where(p => p.UserID.Contains(userid));
+            IEnumerable<Upload> lstUserUploads = GetUploads().Where(p => p.UserID == userid).ToList();
 
             if (lstUserUploads.Count() == 0)
             {

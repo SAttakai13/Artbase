@@ -39,9 +39,7 @@ namespace Artbase.Controllers
         public IActionResult EditPost(int id)
         {
             Post postFound = Pos.GetPostById(id);
-            if (postFound == null)
-                ViewData["Error"] = "Error post not found";
-            return RedirectToAction("ViewAllPosts", "Post");
+            return View(postFound);
         }
 
         [HttpPost]
@@ -75,7 +73,7 @@ namespace Artbase.Controllers
 
         public IActionResult ViewAllImages(string? id)
         {
-            var imageModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == id).ToList(), Prof.GetProfileByUserId(id));
+            var imageModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Prof.GetProfileByUserId(id));
 
             if (imageModel == null)
             {

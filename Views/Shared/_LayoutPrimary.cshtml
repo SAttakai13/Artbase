@@ -19,36 +19,16 @@
 </head>
 <body class="bg-black text-light">
     <div class="d-flex align-content-center justify-content-center" id="wrapper">
-        <!-- Sidebar-->
-        <div id="sidebar-wrapper" class="justify-content-center align-content-center" style="width:fit-content">
+        <!-- Left Sidebar-->
+        <div id="sidebar-wrapper" class="justify-content-center align-content-center" style="width:fit-content; position:fixed; left:0;">
             <div class="sidebar-heading mx-4 justify-content-center align-content-center">
                 <h1><a class="MainFont navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Artbase</a></h1>
             </div>
-            <div class="justify-content-center align-content-center mx-xl-3">
-                <div class="my-3 mx-xxl-5">
-                    <a asp-action="AddUpload" asp-controller="Upload" asp-area="" class="btn btn-outline-light mx-2" style="width:fit-content">Upload <i class="bi bi-upload"></i></i></a>
-                </div>
-            </div>
             <div class="list-group list-group-flush nav flex-column">
-                <div class="accordion">
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne">@UserManager.GetUserName(User)</a>
-                    }
-                    else
-                    {
-                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne"><i class="bi bi-person-fill"></i></a>
-                    }
-                    <div class="collapse" id="ListOne">
-                        <partial name="_LoginPartial" class="text-light" />
-                    </div>
-                </div>
                 @if(SignInManager.IsSignedIn(User)){
                     <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="ViewAllPosts">Dashboard</a>
                 }   
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Profile" asp-action="UserProfilePage">Profile</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Upload" asp-action="ViewAllUploads">My Gallery</a>
                 
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>            
                 <footer class="footer text-muted fixed-bottom " style="width:fit-content;">
@@ -63,14 +43,54 @@
                 </div>
             </div>
         </div>
+        <!--Blank Div Filler-->
+        <div style="min-height:100vh; min-width:250px;">
+        </div>
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid align-content-center">
                 <main role="main" class="p-xxl-4">
                     @RenderBody()
                 </main>
             </div>                        
-        </div>        
+        </div>
+        <!--Blank Div Filler-->
+        <div style="min-height:100vh; min-width:250px;">
+        </div>
+        <!-- Right Sidebar-->
+        <div id="sidebar-wrapper" class="justify-content-center align-content-center" style="width:fit-content; position:fixed; right:0;">          
+            <div class="list-group list-group-flush nav flex-column">
+                <form>
+                    <input placeholder="Search Users..." type="text" style="border-color:#05313d; border-radius:5px; width:215px;" />
+                    <button class="btn btn-outline-light" style="width:15px;"><i class="bi bi-search" style="width:15px;"></i></button>
+                </form>
+                <div class="accordion">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne">@UserManager.GetUserName(User)</a>
+                    }
+                    else
+                    {
+                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne"><i class="bi bi-person-fill"></i></a>
+                    }
+                    <div class="collapse" id="ListOne">
+                        <partial name="_LoginPartial" class="text-light" />
+                    </div>
+                </div>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Profile" asp-action="UserProfilePage">Profile</a>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Upload" asp-action="ViewAllUploads">My Gallery</a>
+                <footer class="footer text-muted fixed-bottom " style="width:fit-content;">
+                    <div class="container" style="width:fit-content;">
+                        &copy; 2023 - Artbase - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>
+            </div>
+            <div class="justify-content-center align-content-center mx-xl-3">
+                <div class="my-3 mx-xxl-5">
+                    <a asp-action="AddUpload" asp-controller="Upload" asp-area="" class="btn btn-outline-light mx-2" style="width:fit-content">Upload <i class="bi bi-upload"></i></i></a>
+                </div>
+            </div>
+        </div>
     </div>
     
     

@@ -1,30 +1,32 @@
 ﻿@model Profile
 
-<form method="post">
-    <div class="p-3 mt-2">
-        <div class="row pb-2">
-            <h2>
-                Edit Profile
-            </h2>
-            <br />
+<div>
+    <form method="post">
+        <div class="p-3 mt-2">
+            <div class="row pb-2">
+                <h2>
+                    Edit Profile
+                </h2>
+                <br />
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         </div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" style="width: 450px;" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="BirthDay"></label>
-        <input asp-for="BirthDay" class="form-control" style="width: 450px;" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Pronouns"></label>
-        <input asp-for="Pronouns" class="form-control" style="width: 450px;" />
-    </div>
-    <div class="mb-3">
-        <label asp-for="Bio"></label>
-        <input asp-for="Bio" class="form-control" style="width: 450px;" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" style="width: 450px;" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="BirthDay"></label>
+            <input asp-for="BirthDay" class="form-control" style="width: 450px;" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Pronouns"></label>
+            <input asp-for="Pronouns" class="form-control" style="width: 450px;" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Bio"></label>
+            <input asp-for="Bio" class="form-control" style="width: 450px;" />
+        </div>
+        <button type="submit" class="btn btn-outline-success">Save</button>
+    </form>
+</div>

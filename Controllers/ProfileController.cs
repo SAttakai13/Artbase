@@ -14,13 +14,15 @@ namespace Artbase.Controllers
     {
         IUserPost Pos;
         IUserProfile Prof;
+        IUserUpload Upl;
 
 
 
-        public ProfileController(IUserProfile userprof, IUserPost userpost)
+        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl)
         {
             Prof = userprof;
             Pos = userpost;
+            Upl = upl;
         }
 
         public IActionResult AllProfiles()
@@ -33,7 +35,7 @@ namespace Artbase.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var viewModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == id).ToList(), Prof.GetProfileByUserId(id));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Prof.GetProfileByUserId(id));
                 if (viewModel == null)
                 {
                     ViewData["Error"] = "User not found";
@@ -42,10 +44,7 @@ namespace Artbase.Controllers
             } else
             {
                 return RedirectToAction("Index", "Home");
-            }
-            
-
-            
+            }                        
         }
 
         [Authorize(Roles = "Admin,User")]
@@ -54,7 +53,7 @@ namespace Artbase.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPosts().Where(m => m.UserId == userid).ToList(), Prof.GetProfileByUserId(userid));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Prof.GetProfileByUserId(userid));
                 try
                 {
                     if (viewModel.UserProfile != null)

@@ -17,7 +17,6 @@
     src: url(/css/Blantik.otf);
 }
 
-
 .mainPage {
     width: 100%;
     overflow: hidden;
@@ -30,14 +29,19 @@
 }
 
 .divContentScroll{
-    height: !important 75vh;
-    overflow-y:auto;
+    max-height: !important 75vh;
+    overflow:!important auto;
 }
 
-body {
-    background-color: #E3E7F2;
-    font-family: 'Poppins', sans-serif;
+.OtherContentNoScroll{
+
     overflow:hidden;
+}
+
+
+body {
+    background-color: #000;
+    font-family: 'Poppins', sans-serif;
 }
 
 .card {

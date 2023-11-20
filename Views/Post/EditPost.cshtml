@@ -1,0 +1,14 @@
+﻿@model Post
+<form method="post" asp-controller="Post" asp-action="EditPost" asp-area="">
+    <div>
+        <div class="m-2">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" style="width: 450px;" />
+        </div>
+        <div class="m-2">
+            <label asp-for="Message"></label>
+            <input asp-for="Message" class="form-control" style="width: 450px;" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-outline-success mt-5" style="width:150px;">Save Post</button>
+</form>

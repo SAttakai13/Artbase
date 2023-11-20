@@ -9,7 +9,7 @@ namespace Artbase.Interfaces
         void EditPost(Post post);
         IEnumerable<Post> GetPosts();
         Post GetPostById(int? postId);
-        IEnumerable<Post> GetPostById(string? postId);
+        IEnumerable<Post> GetPostsByUserId(string? userid);
         
     }
 }
