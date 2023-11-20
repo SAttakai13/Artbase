@@ -17,13 +17,27 @@
     src: url(/css/Blantik.otf);
 }
 
+
+.mainPage {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+}
+
+
 .MainFont {
     font-family: PrettyFont;
+}
+
+.divContentScroll{
+    height: !important 75vh;
+    overflow-y:auto;
 }
 
 body {
     background-color: #E3E7F2;
     font-family: 'Poppins', sans-serif;
+    overflow:hidden;
 }
 
 .card {

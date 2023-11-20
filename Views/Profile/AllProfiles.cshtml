@@ -1,22 +1,21 @@
 ﻿@model IEnumerable<Profile>
-<div class="text-center">
-    <div class="col">
-        <div class="row">
-            @if (Model == null)
+<div class="text-center mainPage">
+    <h3>All profiles</h3>
+    <div class="container-fluid" style="width:fit-content;">
+        @if (Model == null)
+        {
+            <h2></h2>
+        }
+        else
+        {
+            <h3>@TempData["success"]</h3>
+            foreach (Profile prof in Model)
             {
-                <h2></h2>
+                <div class="align-content-center justify-content-center row" style="width:fit-content; height:fit-content;">
+                    <partial name="_ProfilePartialView.cshtml" for="@prof" />
+                </div>
             }
-            else
-            {
-                <h3>@TempData["success"]</h3>
-                foreach (Profile prof in Model)
-                {
-                    <div class="align-content-center justify-content-center p-2">
-                        <partial name="_ProfilePartialView.cshtml" for="@prof" />
-                    </div>
-                }
-                <h3>@TempData["Error"]</h3>
-            }
-        </div>
+            <h3>@TempData["Error"]</h3>
+        }
     </div>
 </div>

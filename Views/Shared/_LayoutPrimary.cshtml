@@ -20,18 +20,42 @@
 <body class="bg-black text-light">
     <div class="d-flex align-content-center justify-content-center" id="wrapper">
         <!-- Sidebar-->
-        <div id="sidebar-wrapper" class="justify-content-center align-content-center">
-            <div class="sidebar-heading">
+        <div id="sidebar-wrapper" class="justify-content-center align-content-center" style="width:fit-content">
+            <div class="sidebar-heading mx-4 justify-content-center align-content-center">
                 <h1><a class="MainFont navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Artbase</a></h1>
             </div>
-            <div class="list-group list-group-flush">
+            <div class="justify-content-center align-content-center mx-xl-3">
+                <div class="my-3 mx-xxl-5">
+                    <a asp-action="AddUpload" asp-controller="Upload" asp-area="" class="btn btn-outline-light mx-2" style="width:fit-content">Upload <i class="bi bi-upload"></i></i></a>
+                </div>
+            </div>
+            <div class="list-group list-group-flush nav flex-column">
+                <div class="accordion">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne">@UserManager.GetUserName(User)</a>
+                    }
+                    else
+                    {
+                        <a class="list-group-item text-light p-3" id="navbarDropdown" role="button" href="#ListOne" data-bs-toggle="collapse" aria-expanded="false" aria-controls="#ListOne"><i class="bi bi-person-fill"></i></a>
+                    }
+                    <div class="collapse" id="ListOne">
+                        <partial name="_LoginPartial" class="text-light" />
+                    </div>
+                </div>
                 @if(SignInManager.IsSignedIn(User)){
                     <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="ViewAllPosts">Dashboard</a>
                 }   
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Profile" asp-action="UserProfilePage">Profile</a>
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Upload" asp-action="ViewAllUploads">My Gallery</a>
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>            
+                <footer class="footer text-muted fixed-bottom " style="width:fit-content;">
+                    <div class="container" style="width:fit-content;">
+                        &copy; 2023 - Artbase - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>
             </div>
             <div class="justify-content-center align-content-center mx-xl-3">
                 <div class="my-3 mx-xxl-5">
@@ -41,44 +65,15 @@
         </div>
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
-            <!-- Top navigation-->
-            <nav class="navbar navbar-expand-lg navbar-black bg-black"> <!--changed the background and dark grey doesn't work-->
-                <div class="container-fluid">
-                    @* <button class="btn btn-dark mx-1" id="sidebarToggle"><i class="bi bi-list"></i></button> *@
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li class="nav-item active"><a class="nav-link text-white mx-1" asp-action="Index" asp-area="" asp-controller="Home">Home</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-dark text-white mx-1" asp-action="AddUpload" asp-area="" asp-controller="Upload">Upload</a></li>
-                            <li class="nav-item dropdown mx-1">
-
-                                @if (SignInManager.IsSignedIn(User))
-                                {
-                                    <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UserManager.GetUserName(User)</a>
-                                } else
-                                {
-                                    <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
-                                }
-
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                                    <partial name="_LoginPartial" class="text-light"/>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="container-fluid mx-5 my-1 overflow-auto">
-                <main role="main" class="pb-3">
+            <div class="container-fluid">
+                <main role="main" class="p-xxl-4">
                     @RenderBody()
                 </main>
             </div>                        
-        </div>
+        </div>        
     </div>
-    <footer class="footer my-1 text-muted">
-        <div class="container">
-            &copy; 2023 - Artbase - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
+    
     <!-- Bootstrap core JS-->
     <!-- Core theme JS-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

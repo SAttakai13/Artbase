@@ -59,6 +59,23 @@ namespace Artbase.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult DeleteUpload(int? id)
+        {
+            string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Up.GetUploadById(id) == null)
+            {
+                ModelState.AddModelError("UploadId", "Upload not found");
+            }
+
+            if (ModelState.IsValid)
+            {
+                Up.DeleteUpload(id);
+            }
+
+            return RedirectToAction("UserProfilePage", "Profile");
+        }
+
 
 
 
@@ -67,9 +84,7 @@ namespace Artbase.Controllers
         public IActionResult ViewAllUploads()
         {
             return View(Up.GetUploads());
-        }
-
-        
+        }        
 
     }
 }

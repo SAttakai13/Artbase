@@ -31,7 +31,7 @@ namespace Artbase.Data
         }
 
         public void EditPost(Post post)
-        {
+        {            
             db.Update(post);
             db.SaveChanges();
         }
