@@ -1,4 +1,7 @@
 ﻿@model Post
+@{
+    ViewData["Title"] = "Create Post";
+}
 <form method="post" asp-controller="Post" asp-action="AddPost" asp-area="">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="m-2">

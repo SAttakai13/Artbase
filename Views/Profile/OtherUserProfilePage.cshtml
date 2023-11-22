@@ -1,4 +1,7 @@
 ﻿@model UserProfileandPosts
+@{
+    ViewData["Title"] = Model.UserProfile.Name;
+}
 @if (Model == null)
 {
     <h2>
@@ -8,15 +11,16 @@
 else
 {
     <section class="gradient-custom-2 justify-content-center">
-        <div class="container m-2 p-4 justify-content-center">
-            <div class="row d-flex justify-content-center align-items-center" style="margin-right:300px;">
+        <div class="container m-2 p-4 justify-content-center" style="height:fit-content;">
+            <div class="row d-flex justify-content-center align-items-center" style="height:fit-content;">
                 <div class="col col-lg-9 col-xl-7">
-                    <div class="card">
+                    <div class="rounded-top card" style="width:650px; border-color:#444;">
                         <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-2 d-flex flex-column" style="width: 150px;">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                      style="width: 150px; z-index: 1">
+
                             </div>
                             <div class="ms-3" style="margin-top: 75px;">
                                 <h5>@Model.UserProfile.Name</h5>
@@ -24,42 +28,74 @@ else
                                 <p>@Model.UserProfile.BirthDay</p>
                             </div>
                         </div>
-                        @* <div class="p-4 text-black" style="background-color: #f8f9fa;">
-                            <div class="d-flex justify-content-end text-center py-1">
-                                <div>
-                                    <p class="mb-1 h5">253</p>
-                                    <p class="small text-muted mb-0">Photos</p>
-                                </div>
-                                <div class="px-3">
-                                    <p class="mb-1 h5">1026</p>
-                                    <p class="small text-muted mb-0">Followers</p>
-                                </div>
-                                <div>
-                                    <p class="mb-1 h5">478</p>
-                                    <p class="small text-muted mb-0">Following</p>
-                                </div>
-                            </div>
-                        </div> *@
-                        <div class="card-body p-4 text-black">
+                        <!--Regular Body Content-->
+                        <div class="card-body p-4 text-black container justify-content-center align-content-center" style="background-color:#333">
                             <div class="mb-5">
-                                <p class="lead fw-normal mb-1">Bio</p>
-                                <div class="p-4" style="background-color: #f8f9fa;">
+                                <div class="row">
+                                    <p class="lead fw-normal mb-1 col col-lg">Bio</p>
+                                </div>
+                                <div class="p-4 mt-3 row" style="background-color: #444;">
                                     <p class="font-italic mb-1">@Model.UserProfile.Bio</p>
                                 </div>
                             </div>
-
-
+                            <!--Uploads-->
+                            <div class="container justify-content-center align-content-center p-3 my-2" style="background-color: #444;">
+                                <h3 class="row lead fw-normal mb-2">Uploads</h3>
+                                <div class="row container d-flex justify-content-center align-content-center">
+                                    @if (Model.UploadsFromUser == null)
+                                    {
+                                        <p> No uploads from user</p>
+                                    } else
+                                    {
+                                        @foreach (Upload p in Model.UploadsFromUser)
+                                        {
+                                            <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
+                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                            </div>
+                                        }
+                                    }                                    
+                                </div>
+                            </div>
 
                             <!--Posts-->
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Recent Posts</p>
-                                @foreach (Post p in Model.PostsForUser)
-                                {
-                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" />
-                                    <a asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-success"><i class="bi bi-pencil-square">Edit Post</i></a>
-                                    <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId" class="btn btn-danger"><i class="bi bi-pencil-square">Delete Post</i></a>
-                                }
+                            <div class="container justify-content-center align-content-center p-3 rounded" style="background-color: #444;">
+                                <p class="row lead fw-normal mb-2">Recent Posts</p>
+                                <div class="row container d-flex justify-content-center align-content-center">
+                                    @if (Model.PostsForUser == null)
+                                    {
+                                        <p> No new posts</p>
+                                    } else
+                                    {
+                                        @foreach (Post p in Model.PostsForUser)
+                                        {
+                                            <div class="row my-2 container justify-content-center align-content-center">
+                                                <div class="container my-2 justify-content-center align-content-center rounded" style="background-color:#555; width:75%;">
+                                                    <!--Profile Info Section-->
+                                                    <div class="row p-2 border-bottom">
+                                                        <h5 class="col col-lg">@Model.UserProfile.Name</h5>
+                                                    </div>
+                                                    <!--Post content section-->
+                                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
+                                                    <!--Comment Section-->
+                                                    <div class="row border-top p-2">
+                                                        <div class="container row m-2">
+                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
+                                                                <p class="row">Add Comment</p>
+                                                                <div class="row">
+                                                                    <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." />
+                                                                    <button class="btn btn-outline-light col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    
+                                </div>
                             </div>
+
 
                         </div>
                     </div>

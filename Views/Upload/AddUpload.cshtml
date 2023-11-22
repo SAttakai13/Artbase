@@ -1,4 +1,7 @@
 ﻿@model FileUpload
+@{
+    ViewData["Title"] = "Upload File";
+}
 <form asp-action="AddUpload" asp-controller="Upload" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

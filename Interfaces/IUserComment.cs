@@ -8,7 +8,8 @@ namespace Artbase.Interfaces
         void DeleteComment(int? commentId);
         void EditComment(Comment comment);
         IEnumerable<Comment> GetComments();
-        IEnumerable<Comment> GetCommentByUser(string? commentid);
+        IEnumerable<Comment> GetAllCommentsByPost(int? postid);
+        IEnumerable<Comment> GetCommentByUser(string? userid);
 
         Comment GetCommentById(int? commentId);
     }

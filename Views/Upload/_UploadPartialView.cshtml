@@ -1,4 +1,2 @@
 ﻿@model Upload
-<div>
-    <img src="data:@Model.fileType;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl" style="height: 300px" />
-</div>
+<img class="d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl" style="height: 300px;" />

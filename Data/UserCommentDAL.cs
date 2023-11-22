@@ -30,7 +30,7 @@ namespace Artbase.Data
 
         public void EditComment(Comment comment)
         {
-            db.Update(comment);
+            db.Comments.Update(comment);
             db.SaveChanges();
         }
 
@@ -40,12 +40,24 @@ namespace Artbase.Data
             return foundComment;
         }
 
-        public IEnumerable<Comment> GetCommentByUser(string? commentid)
+        public IEnumerable<Comment> GetCommentByUser(string? userid)
         {
-            if (commentid == null)
+            if (userid == null)
                 GetComments();
 
-            IEnumerable<Comment> ltsUserComments = GetComments().Where(p => p.UserCommentID.Equals(commentid)).ToList();
+            IEnumerable<Comment> ltsUserComments = GetComments().Where(p => p.UserCommentID == userid).ToList();
+
+            if (ltsUserComments.Count() == 0)
+                return GetComments();
+
+            return ltsUserComments;
+        }
+        public IEnumerable<Comment> GetAllCommentsByPost(int? postid)
+        {
+            if (postid == null)
+                GetComments();
+
+            IEnumerable<Comment> ltsUserComments = GetComments().Where(p => p.PostID.Equals(postid)).ToList();
 
             if (ltsUserComments.Count() == 0)
                 return GetComments();

@@ -35,7 +35,7 @@ namespace Artbase.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Prof.GetProfileByUserId(id));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Prof.GetProfileByUserId(id));
                 if (viewModel == null)
                 {
                     ViewData["Error"] = "User not found";
@@ -129,6 +129,17 @@ namespace Artbase.Controllers
                 return RedirectToAction("UserProfilePage", "Profile");
             }
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SearchUser(string user)
+        {
+            if (string.IsNullOrEmpty(user))
+            {
+                return View("AllProfiles", Prof.GetProfile());
+            }
+
+            return View("AllProfiles", Prof.FilterProfiles(user));
         }
 
     }

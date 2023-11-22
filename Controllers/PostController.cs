@@ -10,11 +10,13 @@ namespace Artbase.Controllers
     {
         IUserPost Pos;
         IUserProfile Prof;
+        IUserUpload Upl;
 
-        public PostController(IUserPost pos, IUserProfile prof)
+        public PostController(IUserPost pos, IUserProfile prof, IUserUpload upl)
         {
             this.Pos = pos;
             this.Prof = prof;
+            this.Upl = upl;
         }
 
         [HttpGet]
@@ -71,22 +73,10 @@ namespace Artbase.Controllers
             return RedirectToAction("UserProfilePage", "Profile");
         }
 
-        public IActionResult ViewAllImages(string? id)
-        {
-            var imageModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Prof.GetProfileByUserId(id));
-
-            if (imageModel == null)
-            {
-                ViewData["Error"] = "Couldn't find posts!";
-                return RedirectToAction("ViewAllPosts", "Post");
-            }
-
-            return View(imageModel);
-        }
-
         public IActionResult ViewAllPosts()
         {
-            return View(Pos.GetPosts());
+            var postsanduploads = new UserProfileandPosts(Pos.GetPosts(), Upl.GetUploads());
+            return View(postsanduploads);
         }
     }
 }

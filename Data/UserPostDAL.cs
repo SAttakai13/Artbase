@@ -53,7 +53,7 @@ namespace Artbase.Data
             IEnumerable<Post>? lstUserPosts = GetPosts().Where(p => p.UserId == userid).ToList();
 
             if (lstUserPosts.Count() == 0)
-                return GetPosts();
+                return null;
 
             return lstUserPosts;
         }

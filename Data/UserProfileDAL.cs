@@ -39,7 +39,7 @@ namespace Artbase.Data
             return db.Profiles.ToList();
         }
 
-        public IEnumerable<Profile> FilterProfiles(string name)
+        public IEnumerable<Profile> FilterProfiles(string? name)
         {
             if (name == null)
             {

@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Security.Policy;
 
 namespace Artbase.Controllers
 {
     public class UploadController : Controller
     {
         IUserUpload Up;
+        IUserPost Pos;
 
-        public UploadController(IUserUpload up)
+        public UploadController(IUserUpload up, IUserPost pos)
         {
-            Up = up;
+            this.Up = up;
+            this.Pos = pos;
         }
 
 
@@ -43,7 +46,7 @@ namespace Artbase.Controllers
 
                     var fileModel = new Upload
                     {
-                        fileType = filemod.File.ContentType,
+                        fileTypes = filemod.File.ContentType,
                         fileUrl = filemod.File.FileName,
                         fileContent = fileContentBytes,
                         UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -62,7 +65,7 @@ namespace Artbase.Controllers
         [HttpGet]
         public IActionResult DeleteUpload(int? id)
         {
-            string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
             if (Up.GetUploadById(id) == null)
             {
                 ModelState.AddModelError("UploadId", "Upload not found");
@@ -77,13 +80,12 @@ namespace Artbase.Controllers
         }
 
 
-
-
-
         //Still need to read from the database
         public IActionResult ViewAllUploads()
         {
-            return View(Up.GetUploads());
+            string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var postsanduploads = new UserProfileandPosts(Pos.GetPostsByUserId(user), Up.GetUploadsByUserId(user));
+            return View(postsanduploads);
         }        
 
     }
