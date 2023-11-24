@@ -15,14 +15,16 @@ namespace Artbase.Controllers
         IUserPost Pos;
         IUserProfile Prof;
         IUserUpload Upl;
+        IUserComment Com;
 
 
 
-        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl)
+        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
         {
             Prof = userprof;
             Pos = userpost;
             Upl = upl;
+            Com = com;
         }
 
         public IActionResult AllProfiles()
@@ -35,11 +37,7 @@ namespace Artbase.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Prof.GetProfileByUserId(id));
-                if (viewModel == null)
-                {
-                    ViewData["Error"] = "User not found";
-                }
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
                 return View(viewModel);
             } else
             {
@@ -53,7 +51,7 @@ namespace Artbase.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Prof.GetProfileByUserId(userid));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Com.GetCommentByUser(userid),Prof.GetProfileByUserId(userid));
                 try
                 {
                     if (viewModel.UserProfile != null)

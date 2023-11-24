@@ -35,9 +35,8 @@ namespace Artbase.Controllers
             if (ModelState.IsValid)
             {
                 Comm.AddComment(comment);
-                return RedirectToAction("UserProfilePage","Profile");
+                return RedirectToAction("Profile/UserProfilePage/#"+id);
             }
-
             return View();
         }
 

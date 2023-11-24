@@ -46,7 +46,7 @@ namespace Artbase.Data
 
             if (lstUserUploads.Count() == 0)
             {
-                return GetUploads();
+                return null;
             }
 
             return lstUserUploads;

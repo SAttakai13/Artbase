@@ -44,8 +44,9 @@ else
                                 <div class="row container d-flex justify-content-center align-content-center">
                                     @if (Model.UploadsFromUser == null)
                                     {
-                                        <p> No uploads from user</p>
-                                    } else
+                                        <p>No uploads from user</p>
+                                    }
+                                    else
                                     {
                                         @foreach (Upload p in Model.UploadsFromUser)
                                         {
@@ -53,7 +54,8 @@ else
                                                 <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
                                             </div>
                                         }
-                                    }                                    
+                                    }
+
                                 </div>
                             </div>
 
@@ -63,12 +65,13 @@ else
                                 <div class="row container d-flex justify-content-center align-content-center">
                                     @if (Model.PostsForUser == null)
                                     {
-                                        <p> No new posts</p>
-                                    } else
+                                        <p>User made no posts</p>
+                                    }
+                                    else
                                     {
                                         @foreach (Post p in Model.PostsForUser)
                                         {
-                                            <div class="row my-2 container justify-content-center align-content-center">
+                                            <div class="row my-2 container justify-content-center align-content-center" id="@p.PostId" name="@p.PostId">
                                                 <div class="container my-2 justify-content-center align-content-center rounded" style="background-color:#555; width:75%;">
                                                     <!--Profile Info Section-->
                                                     <div class="row p-2 border-bottom">
@@ -83,16 +86,26 @@ else
                                                                 <p class="row">Add Comment</p>
                                                                 <div class="row">
                                                                     <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." />
-                                                                    <button class="btn btn-outline-light col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
+                                                                    <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
+
+                                                    <!--View All Comments Section-->
+                                                    @if (Model.CommentsUnderPost == null)
+                                                    {
+                                                        <p></p>
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
                                                 </div>
                                             </div>
                                         }
                                     }
-                                    
+
                                 </div>
                             </div>
 

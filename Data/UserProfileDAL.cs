@@ -53,7 +53,7 @@ namespace Artbase.Data
             IEnumerable<Profile> LstUserProfiles = GetProfile().Where(p => p.Name.ToLower().Contains(name.ToLower()));
             if (LstUserProfiles.Count() == 0)
             {
-                return GetProfile();
+                return null;
             }
 
             return LstUserProfiles;

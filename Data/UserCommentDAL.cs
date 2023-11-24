@@ -48,7 +48,7 @@ namespace Artbase.Data
             IEnumerable<Comment> ltsUserComments = GetComments().Where(p => p.UserCommentID == userid).ToList();
 
             if (ltsUserComments.Count() == 0)
-                return GetComments();
+                return null;
 
             return ltsUserComments;
         }

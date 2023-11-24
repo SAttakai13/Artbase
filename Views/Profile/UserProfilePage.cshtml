@@ -51,12 +51,19 @@ else
                             <div class="container justify-content-center align-content-center p-3 my-2" style="background-color: #444;">
                                 <h3 class="row lead fw-normal mb-2">Uploads</h3>
                                 <div class="row container d-flex justify-content-center align-content-center">
-                                    @foreach (Upload p in Model.UploadsFromUser)
+                                    @if (Model.UploadsFromUser == null)
                                     {
-                                        <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
-                                            <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                                        </div>
+                                        <p>No uploads from user</p>
+                                    } else
+                                    {
+                                        @foreach (Upload p in Model.UploadsFromUser)
+                                        {
+                                            <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
+                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                            </div>
+                                        }
                                     }
+                                   
                                 </div>                                
                             </div>
                             
@@ -64,41 +71,58 @@ else
                             <div class="container justify-content-center align-content-center p-3 rounded" style="background-color: #444;">
                                 <p class="row lead fw-normal mb-2">Recent Posts</p>
                                 <div class="row container d-flex justify-content-center align-content-center">
-                                    @foreach (Post p in Model.PostsForUser)
+                                    @if (Model.PostsForUser == null)
                                     {
-                                        <div class="row my-2 container justify-content-center align-content-center">
-                                            <div class="container my-2 justify-content-center align-content-center rounded" style="background-color:#555; width:75%;">
-                                                <!--Profile Info Section-->
-                                                <div class="row p-2 border-bottom">
-                                                    <h5 class="col col-lg">@Model.UserProfile.Name</h5>
-                                                    <!-- Default dropright button -->
-                                                    <div class="btn-group col col-md-auto">
-                                                        <button class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            Small button
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-dark">
-                                                            <a class="dropdown-item" asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId">Edit <i class="bi bi-pencil-square"></i></a>
-                                                            <a class="dropdown-item" asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId">Delete <i class="bi bi-trash3"></i></a>
+                                        <p>User made no posts</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (Post p in Model.PostsForUser)
+                                        {
+                                            <div class="row my-2 container justify-content-center align-content-center" id="@p.PostId" name="@p.PostId">
+                                                <div class="container my-2 justify-content-center align-content-center rounded" style="background-color:#555; width:75%;">
+                                                    <!--Profile Info Section-->
+                                                    <div class="row p-2 border-bottom">
+                                                        <h5 class="col col-lg">@Model.UserProfile.Name</h5>
+                                                        <!-- Default dropright button -->
+                                                        <div class="btn-group col col-md-auto">
+                                                            <button class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Small button
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-dark">
+                                                                <a class="dropdown-item" asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId">Edit <i class="bi bi-pencil-square"></i></a>
+                                                                <a class="dropdown-item" asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId">Delete <i class="bi bi-trash3"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!--Post content section-->
-                                                <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
-                                                <!--Comment Section-->
-                                                <div class="row border-top p-2">
-                                                    <div class="container row m-2">
-                                                        <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
-                                                            <p class="row">Add Comment</p>
-                                                            <div class="row">
-                                                                <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." />
-                                                                <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
-                                                            </div>                                                            
-                                                        </form>
+                                                    <!--Post content section-->
+                                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
+                                                    <!--Comment Section-->
+                                                    <div class="row border-top p-2">
+                                                        <div class="container row m-2">
+                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
+                                                                <p class="row">Add Comment</p>
+                                                                <div class="row">
+                                                                    <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." />
+                                                                    <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
+
+                                                    <!--View All Comments Section-->
+                                                    @if(Model.CommentsUnderPost == null)
+                                                    {
+                                                        <p></p>
+                                                    } else
+                                                    {
+                                                        
+                                                    }
+                                                </div>                                                
                                             </div>
-                                        </div>
+                                        }
                                     }
+
                                 </div>
                             </div>
                             
