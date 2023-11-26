@@ -12,5 +12,6 @@ namespace Artbase.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Upload> Uploads { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<SaveUploadToUser> UserSaves { get; set; }
     }
 }

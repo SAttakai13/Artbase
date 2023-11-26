@@ -21,6 +21,7 @@ namespace Artbase
             builder.Services.AddTransient<IUserProfile, UserProfileDAL>();
             builder.Services.AddTransient<IUserComment, UserCommentDAL>();
             builder.Services.AddTransient<IUserUpload, UserUploadDAL>();
+            builder.Services.AddTransient<ISaveUploadToUser, SaveUploadToUserDAL>();
 
             var app = builder.Build();
 
