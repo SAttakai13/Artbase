@@ -4,6 +4,7 @@
     {
         public IEnumerable<Post> PostsForUser { get; set; }
         public IEnumerable<Upload> UploadsFromUser { get; set; }
+        public IEnumerable<Upload> UserSavedUploads { get; set; }
         public IEnumerable<Comment> CommentsUnderPost { get; set; }
         public Profile UserProfile { get; set; }
         public Post UserPost { get; set; }
@@ -53,6 +54,15 @@
         {
             this.PostsForUser = posts;
             this.UploadsFromUser = uploads;
+            this.CommentsUnderPost = comments;
+            this.UserProfile = prof;
+        }
+
+        public UserProfileandPosts(IEnumerable<Post> posts, IEnumerable<Upload> uploads, IEnumerable<Upload> savedUploads, IEnumerable<Comment> comments, Profile prof)
+        {
+            this.PostsForUser = posts;
+            this.UploadsFromUser = uploads;
+            this.UserSavedUploads = savedUploads;
             this.CommentsUnderPost = comments;
             this.UserProfile = prof;
         }

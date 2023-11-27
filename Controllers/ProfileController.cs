@@ -16,16 +16,32 @@ namespace Artbase.Controllers
         IUserProfile Prof;
         IUserUpload Upl;
         IUserComment Com;
+        ISaveUploadToUser saveUp;
 
 
 
-        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
+        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com, ISaveUploadToUser saveUp)
         {
-            Prof = userprof;
-            Pos = userpost;
-            Upl = upl;
-            Com = com;
+            this.Prof = userprof;
+            this.Pos = userpost;
+            this.Upl = upl;
+            this.Com = com;
+            this.saveUp = saveUp;
         }
+
+        public IEnumerable<Upload> SaveUploadForUser(string? userid)
+        {
+            IEnumerable<SaveUploadToUser> saved = saveUp.GetSavedUploadForUser(userid);
+            IEnumerable<Upload> uploadsForUser = new List<Upload>();
+            foreach(SaveUploadToUser save in saved)
+            {
+                Upload upload = Upl.GetUploadById(save.UploadId);
+                uploadsForUser.Append(upload);
+            }
+
+            return uploadsForUser;
+        }
+
 
         public IActionResult AllProfiles()
         {
@@ -37,7 +53,7 @@ namespace Artbase.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), SaveUploadForUser(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
                 return View(viewModel);
             } else
             {
@@ -45,13 +61,14 @@ namespace Artbase.Controllers
             }                        
         }
 
+
         [Authorize(Roles = "Admin,User")]
         public IActionResult UserProfilePage()
         {
             if (User.Identity.IsAuthenticated)
             {
                 string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Com.GetCommentByUser(userid),Prof.GetProfileByUserId(userid));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), SaveUploadForUser(userid),Com.GetCommentByUser(userid),Prof.GetProfileByUserId(userid));
                 try
                 {
                     if (viewModel.UserProfile != null)

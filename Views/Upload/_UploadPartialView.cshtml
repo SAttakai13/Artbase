@@ -1,21 +1,22 @@
 ﻿@using System.Security.Claims;
 @model Upload
 @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.UserID)
-{
-    <div class="card justify-content-center align-content-center" style="width: 310px;">
-        <img class="card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl" style="width:300px;">
-        <div class="card-body justify-content-center align-content-center">
-            <a class="btn btn-danger mx-1 dropdown-item" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@Model.UploadId"><i class="bi bi-trash3"></i></a>
+{<!--You are about to put the add/remove a saved upload to user-->
+    <div class="card justify-content-center align-content-center" style="width: 303px;">
+        <img class="img-width-wide img-height-tall card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
+        <div class="card-body container justify-content-center align-content-center">
+            <div class="row">
+                <a class="col btn btn-outline-danger mx-lg-4" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@Model.UploadId"><i class="bi bi-trash3"></i></a>
+                <!--Add button for save to user upload-->
+            </div>
+            
         </div>
     </div>
 } else
 {
-    <div class="card justify-content-center align-content-center" style="width: 310px;">
+    <div class="card justify-content-center align-content-center" style="width: 303px;">
         <div class="card-body justify-content-center align-content-center">
-            <img class="d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl" style="width:300px;">
+            <img class="img-width-wide img-height-tall d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
         </div>
     </div>
 }
-
-
-@* <img class="d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl" style="height: 300px;" /> *@

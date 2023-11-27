@@ -5,53 +5,61 @@
     ViewData["Title"] = "Dashboard";
 
 }
-<div class="container justify-content-center align-content-center p-3 m-2" style="width:fit-content;">
-    <div class="container justify-content-center align-content-center p-3  m-3" style="background-color: #444;">
+<div class="container justify-content-center align-content-center p-3 m-2">
+    <div class="row container justify-content-center align-content-center p-3 my-2" style="background-color: #444;">
         <h3 class="row lead fw-normal mb-2">Uploads</h3>
-
-        <div class="row m-2 p-3">
-            <!--Carousel-->
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width:fit-content; height:fit-content;">
-                <div class="carousel-inner">
-                    @if (Model.UploadsFromUser == null)
-                    {
-                        <p>No new images!</p>
-                    }
-                    else
-                    {
-                        @foreach (Upload p in Model.UploadsFromUser)
-                        {
-                            @if (Model.UploadsFromUser.FirstOrDefault() == p)
+        <div class="row container d-flex justify-content-center align-content-center">
+            @if (Model.UploadsFromUser == null)
+            {
+                <p>No uploads from user</p>
+            }
+            else
+            {
+                <div class="row m-2 p-3">
+                    <!--Carousel-->
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width:fit-content; height:fit-content;">
+                        <div class="carousel-inner">
+                            @if (Model.UploadsFromUser == null)
                             {
-                                <div class="carousel-item active" style="width:325px;">
-                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                                </div>
+                                <p>No new images!</p>
                             }
                             else
                             {
-                                <div class="carousel-item" style="width:325px;">
-                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                                </div>
-                            }
+                                @foreach (Upload p in Model.UploadsFromUser)
+                                {
+                                    @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                    {
+                                        <div class="carousel-item active" style="width:325px;">
+                                            <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item" style="width:325px;">
+                                            <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                        </div>
+                                    }
 
-                        }
-                    }
+                                }
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
+            }
+
         </div>
-        
     </div>
 
     <!--Posts-->
-    <div class="container justify-content-center align-content-center p-3 m-lg-3" style="background-color: #444;">
+    <div class="row container justify-content-center align-content-center p-3 m-lg-3" style="background-color: #444;">
         <p class="row lead fw-normal mb-2">Recent Posts</p>
         <div class="row container d-flex justify-content-center align-content-center">
             @if(Model.PostsForUser == null)

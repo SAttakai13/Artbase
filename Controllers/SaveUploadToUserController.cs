@@ -3,13 +3,14 @@ using Artbase.Interfaces;
 using Artbase.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace Artbase.Controllers
 {
     public class SaveUploadToUserController : Controller
     {
         ISaveUploadToUser saveUp;
-        public SaveUploadToUserController(ISaveUploadToUser saveUp)
+        public SaveUploadToUserController(ISaveUploadToUser saveUp, IUserUpload upload)
         {
             this.saveUp = saveUp;
         }
@@ -20,7 +21,7 @@ namespace Artbase.Controllers
         }
 
         [HttpPost]
-        public IActionResult SavePost(int? id)
+        public IActionResult SaveUpload(int? id)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
             SaveUploadToUser usersave = new SaveUploadToUser(id, currentUser);
@@ -32,7 +33,20 @@ namespace Artbase.Controllers
             return View("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult RemoveSavedUpload(int? id)
+        {
+            if(saveUp.GetSavedUploadById(id) == null)
+            {
+                ModelState.AddModelError("UploadId", "Saved upload not found");
+            }
 
+            if (ModelState.IsValid)
+            {
+                saveUp.DeleteSavedUpload(id);
+            }
 
+            return RedirectToAction("UserProfilePage", "Profile");
+        }
     }
 }
