@@ -48,12 +48,44 @@ else
                                     }
                                     else
                                     {
-                                        @foreach (Upload p in Model.UploadsFromUser)
-                                        {
-                                            <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
-                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                        <div class="row m-2 p-3">
+                                            <!--Carousel-->
+                                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width:fit-content; height:fit-content;">
+                                                <div class="carousel-inner">
+                                                    @if (Model.UploadsFromUser == null)
+                                                    {
+                                                        <p>No new images!</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        @foreach (Upload p in Model.UploadsFromUser)
+                                                        {
+                                                            @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                                            {
+                                                                <div class="carousel-item active" style="width:325px;">
+                                                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="carousel-item" style="width:325px;">
+                                                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                </div>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
                                             </div>
-                                        }
+                                        </div>
                                     }
 
                                 </div>

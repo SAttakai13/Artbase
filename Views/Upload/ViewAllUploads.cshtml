@@ -1,27 +1,48 @@
-﻿@model UserProfileandPosts
+﻿@using System.Security.Claims;
+@model UserProfileandPosts
 @{
     ViewData["Title"] = "My Gallery";
 }
 <div class="container justify-content-center align-content-center p-3" style="width:fit-content;">
     <div class="container justify-content-center align-content-center p-3 m-lg-3" style="background-color: #444;">
         <h3 class="row lead fw-normal mb-2">Uploads</h3>
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                @foreach (Upload p in Model.UploadsFromUser)
-                {
-                    <div class="carousel-item">
-                        <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                    </div>
-                }
+        <div class="row m-2 p-3">
+            <!--Carousel-->
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width:fit-content; height:fit-content;">
+                <div class="carousel-inner">
+                    @if (Model.UploadsFromUser == null)
+                    {
+                        <p>No new images!</p>
+                    }
+                    else
+                    {
+                        @foreach (Upload p in Model.UploadsFromUser)
+                        {
+                            @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                            {
+                                <div class="carousel-item active" style="width:325px;">
+                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item" style="width:325px;">
+                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                </div>
+                            }
+
+                        }
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
 
@@ -29,29 +50,37 @@
     <div class="container justify-content-center align-content-center p-3 m-lg-3" style="background-color: #444;">
         <p class="row lead fw-normal mb-2">Recent Posts</p>
         <div class="row container d-flex justify-content-center align-content-center">
-            @foreach (Post p in Model.PostsForUser)
+            @if(Model.PostsForUser == null)
             {
-                <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
-                    <div class=" my-2 container justify-content-center align-content-center" style="width:fit-content">
-                        <div class="row">
-                            <!-- Default dropright button -->
-                            <div class="btn-group col col-md-auto">
-                                <button class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Small button
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-dark">
-                                    <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId">Edit <i class="bi bi-pencil-square"></i></a>
-                                    <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId">Delete <i class="bi bi-trash3"></i></a>
-                                </div>
+                <p>No posts</p>
+            } else
+            {
+                @foreach (Post p in Model.PostsForUser)
+                {
+                    <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
+                        <div class=" my-2 container justify-content-center align-content-center" style="width:fit-content">
+                            <div class="row">
+                                @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == p.UserId)
+                                {
+                                    <!-- Default dropright button -->
+                                    <div class="btn-group col col-md-auto">
+                                        <button class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-dark">
+                                            <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId">Edit <i class="bi bi-pencil-square"></i></a>
+                                            <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId">Delete <i class="bi bi-trash3"></i></a>
+                                        </div>
+                                    </div>
+                                }
                             </div>
+                            <hr />
+                            <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row" style="width:fit-content" />
                         </div>
-
-                        <hr />
-                        <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row" style="width:fit-content" />
                     </div>
-                </div>
+                }
             }
+            
         </div>
     </div>
-    <h3>@TempData["Error"]</h3>
 </div>
