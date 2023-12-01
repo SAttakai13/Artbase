@@ -20,6 +20,7 @@ namespace Artbase.Controllers
 
 
 
+
         public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com, ISaveUploadToUser saveUp)
         {
             this.Prof = userprof;
@@ -29,19 +30,31 @@ namespace Artbase.Controllers
             this.saveUp = saveUp;
         }
 
-        public IEnumerable<Upload> SaveUploadForUser(string? userid)
+        public IEnumerable<Upload> SavedUploadsForUser(string? userId)
         {
-            IEnumerable<SaveUploadToUser> saved = saveUp.GetSavedUploadForUser(userid);
-            IEnumerable<Upload> uploadsForUser = new List<Upload>();
-            foreach(SaveUploadToUser save in saved)
+            if (userId == null)
+                userId = string.Empty;
+            if (userId == string.Empty)
+                Upl.GetUploads();
+
+            IEnumerable<SaveUploadToUser> lstofSaved = saveUp.GetAllSavedUploads().Where(p => p.UserId == userId).ToList();
+            IEnumerable<Upload> savedUploads = new List<Upload>();
+
+
+            if (lstofSaved.Count() == 0)
+                return null;
+
+            foreach (SaveUploadToUser save in lstofSaved)
             {
                 Upload upload = Upl.GetUploadById(save.UploadId);
-                uploadsForUser.Append(upload);
+                savedUploads.Append(upload);
             }
 
-            return uploadsForUser;
-        }
+            if (savedUploads.Count() == 0)
+                return null;
 
+            return savedUploads;
+        }
 
         public IActionResult AllProfiles()
         {
@@ -53,7 +66,7 @@ namespace Artbase.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), SaveUploadForUser(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
                 return View(viewModel);
             } else
             {
@@ -68,7 +81,7 @@ namespace Artbase.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), SaveUploadForUser(userid),Com.GetCommentByUser(userid),Prof.GetProfileByUserId(userid));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), SavedUploadsForUser(userid), Com.GetCommentByUser(userid), Prof.GetProfileByUserId(userid));
                 try
                 {
                     if (viewModel.UserProfile != null)

@@ -1,22 +1,57 @@
 ﻿@using System.Security.Claims;
+@using Artbase.Controllers;
+@using Artbase.Interfaces;
+@using Artbase.Data;
+
 @model Upload
+
+@{
+    if (TempData["InDatabase"] == null)
+    {
+        TempData["InDatabase"] = "False";
+    }
+    string? isFound = TempData["InDatabase"]?.ToString();
+}
+
 @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.UserID)
 {<!--You are about to put the add/remove a saved upload to user-->
-    <div class="card justify-content-center align-content-center" style="width: 303px;">
-        <img class="img-width-wide img-height-tall card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
-        <div class="card-body container justify-content-center align-content-center">
+    <div class="card justify-content-center align-content-center d-block m-auto" style="height:575px; width:auto;">
+        <img class="card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
+        <div class="card-body container justify-content-center align-content-center" style="height:fit-content">
             <div class="row">
-                <a class="col btn btn-outline-danger mx-lg-4" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@Model.UploadId"><i class="bi bi-trash3"></i></a>
-                <!--Add button for save to user upload-->
-            </div>
-            
+                <div class=" mx-auto">
+                    <a title="Remove Upload" class="col col-md-2 btn btn-outline-danger mx-2" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@Model.UploadId"><i class="bi bi-trash3"></i></a>
+
+                    @if (isFound.Equals("True"))
+                    {
+                        <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@Model.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
+                    } else if (isFound.Equals("False"))
+                    {
+                        <a title="Save Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="SaveUpload" asp-controller="SaveUploadToUser" asp-route-id="@Model.UploadId"><i class="bi bi-bookmark-plus"></i></a>
+                    }
+                    
+                    <!--Add button for save to user upload-->
+                </div>
+            </div>            
         </div>
     </div>
 } else
 {
-    <div class="card justify-content-center align-content-center" style="width: 303px;">
-        <div class="card-body justify-content-center align-content-center">
-            <img class="img-width-wide img-height-tall d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
+    <div class="card justify-content-center align-content-center d-block m-auto" style="height:575px; width:auto;">
+        <img class="card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
+        <div class="card-body container justify-content-center align-content-center">
+            <div class="row">
+                <div class=" mx-auto">
+                     @if (isFound.Equals("True"))
+                    {
+                        <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@Model.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
+                    } else if (isFound.Equals("False"))
+                    {
+                        <a title="Save Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="SaveUpload" asp-controller="SaveUploadToUser" asp-route-id="@Model.UploadId"><i class="bi bi-bookmark-plus"></i></a>
+                    }
+                    <!--Add button for save to user upload-->
+                </div>
+            </div>
         </div>
     </div>
 }

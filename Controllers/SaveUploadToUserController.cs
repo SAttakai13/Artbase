@@ -2,6 +2,7 @@
 using Artbase.Interfaces;
 using Artbase.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
@@ -10,7 +11,7 @@ namespace Artbase.Controllers
     public class SaveUploadToUserController : Controller
     {
         ISaveUploadToUser saveUp;
-        public SaveUploadToUserController(ISaveUploadToUser saveUp, IUserUpload upload)
+        public SaveUploadToUserController(ISaveUploadToUser saveUp)
         {
             this.saveUp = saveUp;
         }
@@ -20,7 +21,21 @@ namespace Artbase.Controllers
             return View();
         }
 
-        [HttpPost]
+        public void CheckIfInDataBase(int? uploadid, string? userid)
+        {
+            
+            if(saveUp.GetSaveUploadByUserAndId(userid, uploadid) != null)
+            {
+                TempData["InDatabase"] = "True";
+            }
+            else
+            {
+                TempData["InDatabase"] = "False";
+            }
+        }
+
+        [HttpGet]
+
         public IActionResult SaveUpload(int? id)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -28,9 +43,11 @@ namespace Artbase.Controllers
             if(ModelState.IsValid)
             {
                 saveUp.SaveUpload(usersave);
-                return RedirectToAction("UserProfilePage", "Profile");
+                CheckIfInDataBase(id, currentUser);
+                Trace.WriteLine("Posted");
+                
             }
-            return View("Index", "Home");
+            return RedirectToAction("UserProfilePage", "Profile");
         }
 
         [HttpGet]

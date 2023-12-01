@@ -9,5 +9,7 @@ namespace Artbase.Interfaces
         IEnumerable<SaveUploadToUser> GetAllSavedUploads();
         IEnumerable<SaveUploadToUser> GetSavedUploadForUser(string? userid);
         SaveUploadToUser GetSavedUploadById(int? id);
+        SaveUploadToUser GetSaveUploadByUserAndId(string? userid, int? id);
+        
     }
 }

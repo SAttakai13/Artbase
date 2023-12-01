@@ -5,7 +5,7 @@ namespace Artbase.Models
     public class SaveUploadToUser
     {
         [Key]
-        public int? SavdId { get; set; }
+        public int? SavedId { get; set; }
         [Required]
         public string? UserId { get; set; }
 
@@ -13,9 +13,9 @@ namespace Artbase.Models
         public int? UploadId { get; set; }
 
         public SaveUploadToUser() { }
-        public SaveUploadToUser(int? savdId, string userId)
+        public SaveUploadToUser(int? uploadId, string userId)
         {
-            this.SavdId = savdId;
+            this.UploadId = uploadId;
             this.UserId = userId;
         }
     }

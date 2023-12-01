@@ -28,7 +28,7 @@ namespace Artbase.Data
 
         public SaveUploadToUser GetSavedUploadById(int? id)
         {
-            SaveUploadToUser? foundSaveUploadToUser = db.UserSaves.Where(p => p.SavdId == id).FirstOrDefault();
+            SaveUploadToUser? foundSaveUploadToUser = db.UserSaves.Where(p => p.SavedId == id).FirstOrDefault();
             return foundSaveUploadToUser;
         }
 
@@ -48,6 +48,25 @@ namespace Artbase.Data
             }
 
             return lstSavedUserUploads;
+        }
+
+        public SaveUploadToUser GetSaveUploadByUserAndId(string? userid, int? uploadid)
+        {
+            if (userid == null)
+                userid = "";
+
+            if (uploadid == null)
+                uploadid = 0;
+
+            if (userid == "" || uploadid == 0)
+                return null;
+
+            IEnumerable<SaveUploadToUser> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
+            SaveUploadToUser? foundUniSave = lstSavedUserUploads.Where(p => p.UploadId == uploadid).FirstOrDefault();
+
+            
+
+            return foundUniSave;
         }
 
         public void SaveUpload(SaveUploadToUser saveUpload)
