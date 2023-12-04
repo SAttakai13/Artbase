@@ -1,9 +1,9 @@
 ﻿@model Profile
 @{
-    ViewData["Title"] = "";
+    ViewData["Title"] = "Edit Profile";
 }
 <div>
-    <form method="post">
+    <form method="post" asp-action="EditProfile" asp-controller="Profile">
         <div class="p-3 mt-2">
             <div class="row pb-2">
                 <h2>
@@ -11,7 +11,7 @@
                 </h2>
                 <br />
             </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label asp-for="Name"></label>
@@ -34,5 +34,8 @@
             <span asp-validation-for="Bio" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-outline-success">Save</button>
+        <div name="lblMsg" class="text-danger">
+            @ViewData["Error"]
+        </div>
     </form>
 </div>

@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace Artbase.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class ProfileController : Controller
     {
         IUserPost Pos;
@@ -17,7 +18,7 @@ namespace Artbase.Controllers
         IUserUpload Upl;
         IUserComment Com;
 
-
+        private int saveNumber { get; set; }
 
 
         public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
@@ -28,111 +29,100 @@ namespace Artbase.Controllers
             this.Com = com;            
         }
 
-        
 
+        [AllowAnonymous]
         public IActionResult AllProfiles()
         {
             return View(Prof.GetProfile());
         }
 
-
+        [AllowAnonymous]
         public IActionResult OtherUserProfilePage(string? id)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
-                return View(viewModel);
-            } else
-            {
-                return RedirectToAction("Index", "Home");
-            }                        
+            var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
+            return View(viewModel);
         }
 
-
-        [Authorize(Roles = "Admin,User")]
         public IActionResult UserProfilePage()
         {
-            if (User.Identity.IsAuthenticated)
+            string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Com.GetCommentByUser(userid), Prof.GetProfileByUserId(userid));
+            try
             {
-                string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Com.GetCommentByUser(userid), Prof.GetProfileByUserId(userid));
-                try
+                if (viewModel.UserProfile != null)
                 {
-                    if (viewModel.UserProfile != null)
-                    {
-                        return View(viewModel);
-                    }
-                    else if (viewModel.UserProfile == null)
-                    {
-                        return RedirectToAction("AddProfile", "Profile");
-                    }
+                    return View(viewModel);
                 }
-                catch (Exception ex)
+                else if (viewModel.UserProfile == null)
                 {
-                    Trace.WriteLine(ex.Message);
+                    return RedirectToAction("AddProfile", "Profile");
                 }
-                return View();
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Home");
+                Trace.WriteLine(ex.Message);
             }
-
+            return View();
         }
 
         [HttpGet]
         public IActionResult AddProfile()
         {
-            if (User.Identity.IsAuthenticated)
-                return View();
-            else 
-                return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,User")]
         public IActionResult AddProfile(Profile prof)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (ModelState.IsValid)
-                {
-                    prof.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    Prof.AddProfile(prof);
-                    return RedirectToAction("UserProfilePage", "Profile");
-                }
-                return View();
-            } else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            
-        }
-
-        [HttpGet]
-        public IActionResult EditProfile(int id)
-        {
-            Profile proFound = Prof.GetProfileById(id);
-            if (proFound == null)
-            {
-                ViewData["Error"] = "Profile not found. Create one?";
-            }
-            return View(proFound);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin,User")]
-        public IActionResult EditProfile(Profile prof)
         {
             if (ModelState.IsValid)
             {
                 prof.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                Prof.EditProfile(prof);
+                Prof.AddProfile(prof);
                 return RedirectToAction("UserProfilePage", "Profile");
             }
             return View();
         }
 
+        [HttpGet]
+        public IActionResult EditProfile(int id)
+        {
+            
+            if (id == null)
+            {
+                ViewData["Error"] = "Bad Profile Id";
+                return View();
+            }
+            else
+            {
+                saveNumber = id;
+                Profile proFound = Prof.GetProfileById(id);
+                if (proFound == null)
+                {
+                    ViewData["Error"] = "Profile not found. Create one?";
+                }
+                return View(proFound);
+            }
+            
+        }
+
+        [HttpPost]
+        public IActionResult EditProfile(Profile prof)
+        {
+            
+            prof.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            prof.ProfileId = saveNumber;
+            if (ModelState.IsValid)
+            {                
+                Prof.EditProfile(prof);
+                TempData["Edited"] = "Profile Updated";
+                return RedirectToAction("UserProfilePage", "Profile");
+            } else
+            {
+                return View();
+            }                
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult SearchUser(string user)
         {

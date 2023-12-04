@@ -25,11 +25,8 @@
                 <h1><a class="MainFont navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Artbase</a></h1>
             </div>
             <div class="list-group list-group-flush nav flex-column">
-                @if(SignInManager.IsSignedIn(User)){
-                    <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="ViewAllPosts">Dashboard</a>
-                }   
-                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Post" asp-action="ViewAllPosts">Dashboard</a>
+                <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>                
                 <a class="list-group-item list-group-item-action text-light p-3" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>            
                 <footer class="footer text-muted fixed-bottom " style="width:fit-content;">
                     <div class="container" style="width:fit-content;">

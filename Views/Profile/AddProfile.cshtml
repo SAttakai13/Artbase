@@ -1,8 +1,8 @@
 ﻿@model Profile
 @{
-    ViewData["Title"] = "";
+    ViewData["Title"] = "Create Profile";
 }
-<form method="post" style="">
+<form method="post">
     <div class="p-3 mt-2">
         <div class="row pb-2">
             <h2>
@@ -10,7 +10,7 @@
             </h2>
             <br/>
         </div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
     </div>
     <div class="mb-3">
         <label asp-for="Name"></label>

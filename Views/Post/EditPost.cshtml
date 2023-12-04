@@ -4,7 +4,7 @@
 }
 <form method="post" asp-controller="Post" asp-action="EditPost">
     <div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="m-2">
             <label asp-for="ImageUrl"></label>
             <input asp-for="ImageUrl" class="form-control" style="width: 450px;" />
@@ -17,4 +17,7 @@
         </div>
     </div>
     <button type="submit" class="btn btn-outline-success mt-5" style="width:150px;">Save Post</button>
+    <div name="lblMsg" class="text-danger">
+        @ViewData["Error"]
+    </div>
 </form>

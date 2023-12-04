@@ -1,16 +1,20 @@
 ﻿using Artbase.Data;
 using Artbase.Interfaces;
 using Artbase.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Artbase.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class PostController : Controller
     {
         IUserPost Pos;
         IUserProfile Prof;
         IUserUpload Upl;
+
+        private int saveNumber { get; set; }
 
         public PostController(IUserPost pos, IUserProfile prof, IUserUpload upl)
         {
@@ -40,20 +44,36 @@ namespace Artbase.Controllers
         [HttpGet]
         public IActionResult EditPost(int id)
         {
-            Post postFound = Pos.GetPostById(id);
-            return View(postFound);
+            if (id == null)
+            {
+                ViewData["Error"] = "Bad Post";
+                return View();
+            } else
+            {
+                saveNumber = id;
+                Post postFound = Pos.GetPostById(id);
+                if (postFound == null)
+                {
+                    ViewData["Error"] = "Post not found";
+                }
+                return View(postFound);
+            }            
         }
 
         [HttpPost]
         public IActionResult EditPost(Post post)
         {
+            post.PostId = saveNumber;
+            post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
-            {
-                post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            {                
                 Pos.EditPost(post);
                 return RedirectToAction("UserProfilePage", "Profile");
             }
-            return View();
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -73,6 +93,7 @@ namespace Artbase.Controllers
             return RedirectToAction("UserProfilePage", "Profile");
         }
 
+        [AllowAnonymous]
         public IActionResult ViewAllPosts()
         {
             var postsanduploads = new UserProfileandPosts(Pos.GetPosts(), Upl.GetUploads());

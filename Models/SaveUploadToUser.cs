@@ -5,7 +5,8 @@ namespace Artbase.Models
     public class SaveUploadToUser
     {
         [Key]
-        public int? SavedId { get; set; }
+        public int SavedId { get; set; }
+
         [Required]
         public string? UserId { get; set; }
 

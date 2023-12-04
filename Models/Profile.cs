@@ -5,7 +5,7 @@ namespace Artbase.Models
     public class Profile
     {
         [Key]
-        public int? ProfileId { get; set; }
+        public int ProfileId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -15,8 +15,8 @@ namespace Artbase.Models
 
         [Required(ErrorMessage = "Please input your Pronouns")]
         public string? Pronouns { get; set; }
-        [Required(ErrorMessage = "Please add your bio")]
 
+        [Required(ErrorMessage = "Please add your bio")]
         public string? Bio {  get; set; }
 
         [MaxLength(450)]

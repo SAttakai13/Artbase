@@ -2,6 +2,7 @@
 using Artbase.Interfaces;
 using Artbase.Models;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Security.Policy;
 
 namespace Artbase.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class UploadController : Controller
     {
         IUserUpload Up;
@@ -25,11 +27,6 @@ namespace Artbase.Controllers
 
         public IEnumerable<Upload> SavedUploadsForUser(string? userId)
         {
-            if (userId == null)
-                userId = string.Empty;
-            if (userId == string.Empty)
-                Up.GetUploads();
-
             IEnumerable<SaveUploadToUser> lstofSaved = SaveUp.GetAllSavedUploads().Where(p => p.UserId == userId).ToList();
             IEnumerable<Upload> savedUploads = new List<Upload>();
 
@@ -109,6 +106,7 @@ namespace Artbase.Controllers
 
 
         //Still need to read from the database
+        
         public IActionResult ViewAllUploads()
         {
             string user = User.FindFirstValue(ClaimTypes.NameIdentifier);

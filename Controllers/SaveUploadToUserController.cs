@@ -35,7 +35,6 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-
         public IActionResult SaveUpload(int? id)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);

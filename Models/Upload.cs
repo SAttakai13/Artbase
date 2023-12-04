@@ -6,7 +6,7 @@ namespace Artbase.Models
     {
 
         [Key]
-        public int? UploadId { get; set; }
+        public int UploadId { get; set; }
 
         public string? fileTypes {  get; set; }
         public string? fileUrl { get; set; }
