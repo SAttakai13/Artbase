@@ -10,26 +10,22 @@ else
     {
         <div class="card-subtitle mb-2 text-muted">
             <!-- Default dropright button -->
-            <div class="btn-group col col-md-auto">
-                <button class="btn btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="btn-group col col-md-auto text-light">
+                <button class="btn btn-sm btn-outline-light dropdown-toggle dropdown rounded-pill" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="bi bi-three-dots"></i>
                 </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-action="EditPost" asp-controller="Post" asp-route-id="@Model.PostId">Edit <i class="bi bi-pencil-square"></i></a>
-                    <a class="dropdown-item" asp-action="DeletePost" asp-controller="Post" asp-route-id="@Model.PostId">Delete <i class="bi bi-trash3"></i></a>
+                <div class="dropdown-menu dropdown-menu-dark">
+                    <a class="dropdown-item text-light" asp-action="EditPost" asp-controller="Post" asp-route-id="@Model.PostId">Edit <i class="bi bi-pencil-square"></i></a>
+                    <a class="dropdown-item text-light" asp-action="DeletePost" asp-controller="Post" asp-route-id="@Model.PostId">Delete <i class="bi bi-trash3"></i></a>
                 </div>
             </div>
-        </div>        
-        <div class="card-body container-fluid" style="width:fit-content">
+        </div>
+        <div class="card-body container-fluid text-light" style="width:fit-content">
             <div class="container" style="width:fit-content;">
                 <div class="col justify-content-center" style="width:fit-content;">
                     @if (Model.Message != null)
                     {
-                        <p style="width:fit-content;" class="mb-4 row">@Model.Message</p>
-                    }
-                    else
-                    {
-                        <p></p>
+                        <p style="width:fit-content;" class="mb-4 row text-light">@Model.Message</p>
                     }
                     <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width: 350px;" class="row img-set-size" />
                 </div>
@@ -37,16 +33,12 @@ else
         </div>
     } else
     {
-        <div class="card-body">
+        <div class="card-body container-fluid text-light" style="width:fit-content">
             <div class="container" style="width:fit-content;">
                 <div class="col justify-content-center" style="width:fit-content;">
                     @if (Model.Message != null)
                     {
-                        <p style="width:fit-content;" class="mb-4 row">@Model.Message</p>
-                    }
-                    else
-                    {
-                        <p></p>
+                        <p style="width:fit-content;" class="mb-4 row text-light">@Model.Message</p>
                     }
                     <img src="@Model.ImageUrl" alt="Image Not Loaded Properly" style="width: 350px;" class="row img-set-size" />
                 </div>

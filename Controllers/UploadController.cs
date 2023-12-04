@@ -14,11 +14,39 @@ namespace Artbase.Controllers
     {
         IUserUpload Up;
         IUserPost Pos;
+        ISaveUploadToUser SaveUp;
 
-        public UploadController(IUserUpload up, IUserPost pos)
+        public UploadController(IUserUpload up, IUserPost pos, ISaveUploadToUser saveup)
         {
             this.Up = up;
             this.Pos = pos;
+            this.SaveUp = saveup;
+        }
+
+        public IEnumerable<Upload> SavedUploadsForUser(string? userId)
+        {
+            if (userId == null)
+                userId = string.Empty;
+            if (userId == string.Empty)
+                Up.GetUploads();
+
+            IEnumerable<SaveUploadToUser> lstofSaved = SaveUp.GetAllSavedUploads().Where(p => p.UserId == userId).ToList();
+            IEnumerable<Upload> savedUploads = new List<Upload>();
+
+
+            if (lstofSaved.Count() == 0)
+                return null;
+
+            foreach (SaveUploadToUser save in lstofSaved)
+            {
+                Upload upload = Up.GetUploadById(save.UploadId);
+                savedUploads.Append(upload);
+            }
+
+            if (savedUploads.Count() == 0)
+                return null;
+
+            return savedUploads;
         }
 
 
@@ -84,7 +112,7 @@ namespace Artbase.Controllers
         public IActionResult ViewAllUploads()
         {
             string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var postsanduploads = new UserProfileandPosts(Pos.GetPostsByUserId(user), Up.GetUploadsByUserId(user));
+            var postsanduploads = new UserProfileandPosts(Pos.GetPostsByUserId(user), Up.GetUploadsByUserId(user), SavedUploadsForUser(user));
             return View(postsanduploads);
         }        
 

@@ -31,6 +31,7 @@
             this.UserProfile = prof;
         }
 
+
         public UserProfileandPosts(IEnumerable<Post> posts, IEnumerable<Upload> uploads)
         {
             this.PostsForUser = posts;
@@ -49,6 +50,13 @@
             this.PostsForUser = posts;
             this.UploadsFromUser = uploads;
             this.UserProfile = prof;
+        }
+
+        public UserProfileandPosts(IEnumerable<Post> posts, IEnumerable<Upload> uploads, IEnumerable<Upload> saveduploads)
+        {
+            this.PostsForUser = posts;
+            this.UploadsFromUser = uploads;
+            this.UserSavedUploads = saveduploads;
         }
         public UserProfileandPosts(IEnumerable<Post> posts, IEnumerable<Upload> uploads, IEnumerable<Comment> comments, Profile prof)
         {

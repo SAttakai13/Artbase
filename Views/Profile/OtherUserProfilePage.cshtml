@@ -10,11 +10,11 @@
 }
 else
 {
-    <section class="gradient-custom-2 justify-content-center">
-        <div class="container m-2 p-4 justify-content-center" style="height:fit-content;">
+    <section class="gradient-custom-2" style="height:fit-content;">
+        <div class="container justify-content-center" style="height:fit-content;">
             <div class="row d-flex justify-content-center align-items-center" style="height:fit-content;">
-                <div class="col col-lg-9 col-xl-7">
-                    <div class="rounded-top card" style="width:650px; border-color:#444;">
+                <div class="col col-lg-9 col-xl-7" style="height:fit-content;">
+                    <div class="rounded-top card text-white" style="width:650px; background-color:#444;">
                         <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-2 d-flex flex-column" style="width: 150px;">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
@@ -29,32 +29,39 @@ else
                             </div>
                         </div>
                         <!--Regular Body Content-->
-                        <div class="card-body p-4 text-black container justify-content-center align-content-center" style="background-color:#333">
-                            <div class="mb-5">
-                                <div class="row">
-                                    <p class="lead fw-normal mb-1 col col-lg">Bio</p>
+                        <div class="card-body px-4 text-black container justify-content-center align-content-center">
+                            <div class="mb-2 row">
+                                <div class="row container mb-3">
+                                    <div class="row">
+                                        <h3 class="m-1 lead fw-normal mb-1 col col-lg text-light">Bio</h3>
+                                        <div class="px-4 m-2 row">
+                                            <p class="font-italic mb-1 text-light">@Model.UserProfile.Bio</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="p-4 mt-3 row" style="background-color: #444;">
-                                    <p class="font-italic mb-1">@Model.UserProfile.Bio</p>
+                                <div class="px-3 mt-3 row">
+                                    <a class="text-light m-1" asp-action="ViewAllUploads" asp-controller="Upload" asp-area="">See Saved Uploads</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-body px-4 text-black container justify-content-center align-content-center">
                             <!--Uploads-->
-                            <div class="container justify-content-center align-content-center p-3 my-2" style="background-color: #444;">
-                                <h3 class="row lead fw-normal mb-2">Uploads</h3>
-                                <div class="row container d-flex justify-content-center align-content-center">
+                            <div class="container container-fluid justify-content-center align-content-center p-3 my-2">
+                                <h3 class="row lead fw-normal text-light">Uploads</h3>
+                                <div class="row container container-fluid d-flex justify-content-center align-content-center" style="height:fit-content;">
                                     @if (Model.UploadsFromUser == null)
                                     {
-                                        <p>No uploads from user</p>
+                                        <p class="text-light">No uploads from user</p>
                                     }
                                     else
                                     {
-                                        <div class="row m-1 p-3">
+                                        <div class="row p-3" style="height:600px; width:fit-content;">
                                             <!--Carousel-->
-                                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                            <div id="carouselExampleControls" class="carousel slide justify-content-center" data-bs-ride="carousel" style="width:750px; height:500px;">
                                                 <div class="carousel-inner">
                                                     @if (Model.UploadsFromUser == null)
                                                     {
-                                                        <p>No new images!</p>
+                                                        <p class="text-light">No new images!</p>
                                                     }
                                                     else
                                                     {
@@ -72,7 +79,6 @@ else
                                                                     <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
                                                                 </div>
                                                             }
-
                                                         }
                                                     }
                                                 </div>
@@ -87,52 +93,58 @@ else
                                             </div>
                                         </div>
                                     }
-
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="card-body px-4 text-black container justify-content-center align-content-center">
                             <!--Posts-->
-                            <div class="container justify-content-center align-content-center p-3 rounded" style="background-color: #444;">
-                                <p class="row lead fw-normal mb-2">Recent Posts</p>
+                            <div class="container justify-content-center align-content-center p-3 rounded">
+                                <p class="row lead fw-normal mb-2 text-light">Recent Posts</p>
                                 <div class="row container d-flex justify-content-center align-content-center">
                                     @if (Model.PostsForUser == null)
                                     {
-                                        <p>User made no posts</p>
+                                        <p class="text-light">User made no posts</p>
                                     }
                                     else
                                     {
                                         @foreach (Post p in Model.PostsForUser)
                                         {
-                                            <div class="row my-2 container justify-content-center align-content-center" id="@p.PostId" name="@p.PostId">
-                                                <div class="container my-2 justify-content-center align-content-center rounded" style="background-color:#555; width:75%;">
-                                                    <!--Profile Info Section-->
-                                                    <div class="row p-2 border-bottom">
-                                                        <h5 class="col col-lg">@Model.UserProfile.Name</h5>
+                                            <div class="row my-2 container justify-content-center align-content-center">
+                                                <!--Profile Info Section-->
+                                                <div class="card bg-dark" style="width: fit-content">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-2 text-light">@Model.UserProfile.Name</h5>
+                                                        <!--Post content section-->
+                                                        <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
                                                     </div>
-                                                    <!--Post content section-->
-                                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
-                                                    <!--Comment Section-->
-                                                    <div class="row border-top p-2">
-                                                        <div class="container row m-2">
-                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
-                                                                <p class="row">Add Comment</p>
-                                                                <div class="row">
-                                                                    <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." />
-                                                                    <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="submit"><i class="bi bi-send-arrow-up"></i></button>
-                                                                </div>
-                                                            </form>
+                                                    <div class="card-body">
+                                                        <!--Comment Section-->
+                                                        <div class="row border-top p-2">
+                                                            <div class="container row m-2">
+                                                                <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
+                                                                    <p class="row text-light">Add Comment</p>
+                                                                    <div class="row">
+                                                                        <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." disabled />
+                                                                        <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-send-arrow-up"></i></button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-                                                    <!--View All Comments Section-->
-                                                    @if (Model.CommentsUnderPost == null)
-                                                    {
-                                                        <p></p>
-                                                    }
-                                                    else
-                                                    {
-
-                                                    }
+                                                </div>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Work In Progress</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                This is in the works come back later!
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }
@@ -140,8 +152,6 @@ else
 
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

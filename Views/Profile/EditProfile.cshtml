@@ -16,18 +16,22 @@
         <div class="mb-3">
             <label asp-for="Name"></label>
             <input asp-for="Name" class="form-control" style="width: 450px;" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="BirthDay"></label>
             <input asp-for="BirthDay" class="form-control" style="width: 450px;" />
+            <span asp-validation-for="BirthDay" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Pronouns"></label>
             <input asp-for="Pronouns" class="form-control" style="width: 450px;" />
+            <span asp-validation-for="Pronouns" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Bio"></label>
             <input asp-for="Bio" class="form-control" style="width: 450px;" />
+            <span asp-validation-for="Bio" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-outline-success">Save</button>
     </form>

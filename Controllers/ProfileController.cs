@@ -16,45 +16,19 @@ namespace Artbase.Controllers
         IUserProfile Prof;
         IUserUpload Upl;
         IUserComment Com;
-        ISaveUploadToUser saveUp;
 
 
 
 
-        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com, ISaveUploadToUser saveUp)
+        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
         {
             this.Prof = userprof;
             this.Pos = userpost;
             this.Upl = upl;
-            this.Com = com;
-            this.saveUp = saveUp;
+            this.Com = com;            
         }
 
-        public IEnumerable<Upload> SavedUploadsForUser(string? userId)
-        {
-            if (userId == null)
-                userId = string.Empty;
-            if (userId == string.Empty)
-                Upl.GetUploads();
-
-            IEnumerable<SaveUploadToUser> lstofSaved = saveUp.GetAllSavedUploads().Where(p => p.UserId == userId).ToList();
-            IEnumerable<Upload> savedUploads = new List<Upload>();
-
-
-            if (lstofSaved.Count() == 0)
-                return null;
-
-            foreach (SaveUploadToUser save in lstofSaved)
-            {
-                Upload upload = Upl.GetUploadById(save.UploadId);
-                savedUploads.Append(upload);
-            }
-
-            if (savedUploads.Count() == 0)
-                return null;
-
-            return savedUploads;
-        }
+        
 
         public IActionResult AllProfiles()
         {
@@ -81,7 +55,7 @@ namespace Artbase.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), SavedUploadsForUser(userid), Com.GetCommentByUser(userid), Prof.GetProfileByUserId(userid));
+                var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(userid), Upl.GetUploadsByUserId(userid), Com.GetCommentByUser(userid), Prof.GetProfileByUserId(userid));
                 try
                 {
                     if (viewModel.UserProfile != null)

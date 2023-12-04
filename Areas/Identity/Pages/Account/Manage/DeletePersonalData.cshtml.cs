@@ -4,7 +4,9 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Artbase.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,15 +19,17 @@ namespace Artbase.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly IUserProfile profile;
 
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger, IUserProfile prof)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            profile = prof;
         }
 
         /// <summary>
@@ -75,6 +79,9 @@ namespace Artbase.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            //grabbing user id and deleting their profile
+            profile.DeleteProfile(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)

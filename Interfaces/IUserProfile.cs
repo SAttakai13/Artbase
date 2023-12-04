@@ -5,7 +5,7 @@ namespace Artbase.Interfaces
     public interface IUserProfile
     {
         void AddProfile(Profile profile);
-        void DeleteProfile(int? profileid);
+        void DeleteProfile(string? profileuserid);
         void EditProfile(Profile profile);
         IEnumerable<Profile> GetProfile();
         

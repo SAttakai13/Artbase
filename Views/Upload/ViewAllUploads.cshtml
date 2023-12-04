@@ -3,94 +3,173 @@
 @{
     ViewData["Title"] = "My Gallery";
 }
-<div class="container justify-content-center align-content-center p-3" style="width:fit-content;">
-    <div class="row scontainer justify-content-center align-content-center p-3 my-2" style="background-color: #444;">
-        <h3 class="row lead fw-normal mb-2">Uploads</h3>
-        <div class="row container d-flex justify-content-center align-content-center">
-            @if (Model.UploadsFromUser == null)
-            {
-                <p>No uploads from user</p>
-            }
-            else
-            {
-                <div class="row m-1 p-3">
-                    <!--Carousel-->
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            @if (Model.UploadsFromUser == null)
-                            {
-                                <p>No new images!</p>
-                            }
-                            else
-                            {
-                                @foreach (Upload p in Model.UploadsFromUser)
+<section class="gradient-custom-2">
+    <div class="container justify-content-center" style="height:fit-content;">
+        <div class="row d-flex justify-content-center align-items-center" style="height:fit-content;">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="rounded-top card text-white" style="width:650px; background-color:#444;">
+                    <div class="card-body px-4 text-black container justify-content-center align-content-center">
+                        <!--Saved Uploads For User-->
+                        <div class="container container-fluid justify-content-center align-content-center p-3 my-2">
+                            <h3 class="row lead fw-normal text-light">Favorites</h3>
+                            <div class="row container container-fluid d-flex justify-content-center align-content-center" style="height:fit-content;">
+                                @if (Model.UserSavedUploads == null)
                                 {
-                                    @if (Model.UploadsFromUser.FirstOrDefault() == p)
-                                    {
-                                        <div class="carousel-item active">
-                                            <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="carousel-item">
-                                            <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
-                                        </div>
-                                    }
-
+                                    <p class="text-light">Nothing Saved Yet!</p>
                                 }
-                            }
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-
-    <!--Posts-->
-    <div class="row container justify-content-center align-content-center p-3 m-lg-3" style="background-color: #444;">
-        <p class="row lead fw-normal mb-2">Recent Posts</p>
-        <div class="row container d-flex justify-content-center align-content-center">
-            @if(Model.PostsForUser == null)
-            {
-                <p>No posts</p>
-            } else
-            {
-                @foreach (Post p in Model.PostsForUser)
-                {
-                    <div class="row my-2" style="background-color:#444; border-color:#222; border-radius:5px; width:fit-content;">
-                        <div class=" my-2 container justify-content-center align-content-center" style="width:fit-content">
-                            <div class="row">
-                                @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == p.UserId)
+                                else
                                 {
-                                    <!-- Default dropright button -->
-                                    <div class="btn-group col col-md-auto">
-                                        <button class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bi bi-three-dots"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-dark">
-                                            <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="EditPost" asp-controller="Post" asp-route-id="@p.PostId">Edit <i class="bi bi-pencil-square"></i></a>
-                                            <a class="btn btn-outline-light mx-1 dropdown-item" style="width:fit-content;" asp-action="DeletePost" asp-controller="Post" asp-route-id="@p.PostId">Delete <i class="bi bi-trash3"></i></a>
+                                    <div class="row p-3" style="height:600px; width:fit-content;">
+                                        <!--Carousel-->
+                                        <div id="carouselSavedUploadControls" class="carousel slide justify-content-center" data-bs-ride="carousel" style="width:750px; height:500px;">
+                                            <div class="carousel-inner">
+                                                @if (Model.UserSavedUploads == null)
+                                                {
+                                                    <p>No new images!</p>
+                                                }
+                                                else
+                                                {
+                                                    @foreach (Upload p in Model.UserSavedUploads)
+                                                    {
+                                                        @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                                        {
+                                                            <div class="carousel-item active">
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="carousel-item">
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselSavedUploadControls" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselSavedUploadControls" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
                                         </div>
                                     </div>
                                 }
                             </div>
-                            <hr />
-                            <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row" style="width:fit-content" />
                         </div>
                     </div>
-                }
-            }
-            
+                    <div class="card-body px-4 text-black container justify-content-center align-content-center">
+                        <!--Uploads-->
+                        <div class="container container-fluid justify-content-center align-content-center p-3 my-2">
+                            <h3 class="row lead fw-normal text-light">Uploads</h3>
+                            <div class="row container container-fluid d-flex justify-content-center align-content-center" style="height:fit-content;">
+                                @if (Model.UploadsFromUser == null)
+                                {
+                                    <p class="text-light">No uploads from user</p>
+                                }
+                                else
+                                {
+                                    <div class="row p-3" style="height:600px; width:fit-content;">
+                                        <!--Carousel-->
+                                        <div id="carouselExampleControls" class="carousel slide justify-content-center" data-bs-ride="carousel" style="width:750px; height:500px;">
+                                            <div class="carousel-inner">
+                                                @if (Model.UploadsFromUser == null)
+                                                {
+                                                    <p class="text-light">No new images!</p>
+                                                }
+                                                else
+                                                {
+                                                    @foreach (Upload p in Model.UploadsFromUser)
+                                                    {
+                                                        @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                                        {
+                                                            <div class="carousel-item active">
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="carousel-item">
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-4 text-black container justify-content-center align-content-center">
+                        <!--Posts-->
+                        <div class="container justify-content-center align-content-center p-3 rounded">
+                            <p class="row lead fw-normal mb-2 text-light">Recent Posts</p>
+                            <div class="row container d-flex justify-content-center align-content-center">
+                                @if (Model.PostsForUser == null)
+                                {
+                                    <p class="text-light">User made no posts</p>
+                                }
+                                else
+                                {
+                                    @foreach (Post p in Model.PostsForUser)
+                                    {
+                                        <div class="row my-2 container justify-content-center align-content-center">
+                                            <!--Profile Info Section-->
+                                            <div class="card bg-dark" style="width: fit-content">
+                                                <div class="card-body">
+                                                    <!--Post content section-->
+                                                    <partial name="~/Views/Post/_PostPartialView.cshtml" for="@p" class="row p-2" />
+                                                </div>
+                                                <div class="card-body">
+                                                    <!--Comment Section-->
+                                                    <div class="row border-top p-2">
+                                                        <div class="container row m-2">
+                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
+                                                                <p class="row text-light">Add Comment</p>
+                                                                <div class="row">
+                                                                    <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." disabled />
+                                                                    <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-send-arrow-up"></i></button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Work In Progress</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            This is in the works come back later!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>

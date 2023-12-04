@@ -18,9 +18,9 @@ namespace Artbase.Data
             db.SaveChanges();
         }
 
-        public void DeleteProfile(int? profileid)
+        public void DeleteProfile(string? profileuserid)
         {
-            var foundprofile = GetProfileById(profileid);
+            var foundprofile = GetProfileByUserId(profileuserid);
             if (foundprofile != null)
             {
                 db.Profiles.Remove(foundprofile);
