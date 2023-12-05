@@ -5,7 +5,8 @@ namespace Artbase.Models
     public class Profile
     {
         [Key]
-        public int ProfileId { get; set; }
+        
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }

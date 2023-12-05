@@ -14,7 +14,6 @@ namespace Artbase.Controllers
         IUserProfile Prof;
         IUserUpload Upl;
 
-        private int saveNumber { get; set; }
 
         public PostController(IUserPost pos, IUserProfile prof, IUserUpload upl)
         {
@@ -42,7 +41,7 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditPost(int id)
+        public IActionResult EditPost(int? id)
         {
             if (id == null)
             {
@@ -50,7 +49,6 @@ namespace Artbase.Controllers
                 return View();
             } else
             {
-                saveNumber = id;
                 Post postFound = Pos.GetPostById(id);
                 if (postFound == null)
                 {
@@ -63,11 +61,11 @@ namespace Artbase.Controllers
         [HttpPost]
         public IActionResult EditPost(Post post)
         {
-            post.PostId = saveNumber;
             post.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Post modpost = post;
             if (ModelState.IsValid)
             {                
-                Pos.EditPost(post);
+                Pos.EditPost(modpost);
                 return RedirectToAction("UserProfilePage", "Profile");
             }
             else

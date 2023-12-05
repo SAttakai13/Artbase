@@ -35,10 +35,10 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-        public IActionResult SaveUpload(int? id)
+        public IActionResult SaveUpload(int id)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            SaveUploadToUser usersave = new SaveUploadToUser(id, currentUser);
+            UserSaves usersave = new UserSaves(id, currentUser);
             if(ModelState.IsValid)
             {
                 saveUp.SaveUpload(usersave);

@@ -2,8 +2,8 @@
 @{
     ViewData["Title"] = "Edit Profile";
 }
-<div>
-    <form method="post" asp-action="EditProfile" asp-controller="Profile">
+<form method="post" asp-controller="Profile" asp-action="EditProfile">
+    <div>
         <div class="p-3 mt-2">
             <div class="row pb-2">
                 <h2>
@@ -33,9 +33,10 @@
             <input asp-for="Bio" class="form-control" style="width: 450px;" />
             <span asp-validation-for="Bio" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-outline-success">Save</button>
-        <div name="lblMsg" class="text-danger">
-            @ViewData["Error"]
-        </div>
-    </form>
-</div>
+    </div>    
+    <button type="submit" class="btn btn-outline-success">Save</button>
+    <a class="btn btn-outline-warning" asp-action="UserProfilePage" asp-controller="Profile" asp-area="">Cancel</a>
+    <div name="lblMsg" class="text-danger">
+        @ViewData["Error"]
+    </div>
+</form>

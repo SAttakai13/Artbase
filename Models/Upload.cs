@@ -10,8 +10,11 @@ namespace Artbase.Models
 
         public string? fileTypes {  get; set; }
         public string? fileUrl { get; set; }
-        public byte[] fileContent { get; set; }        
-        public string? UserID {  get; set; }
+        public byte[] fileContent { get; set; }
+
+        [Required(ErrorMessage = "User id is required")]
+        [MaxLength(450)]
+        public string UserID {  get; set; }
 
         public Upload() { }
         public Upload(string? fileTypes, string? fileUrl, string? userID)

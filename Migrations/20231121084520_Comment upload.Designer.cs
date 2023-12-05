@@ -49,11 +49,11 @@ namespace Artbase.Migrations
 
             modelBuilder.Entity("Artbase.Models.Post", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -64,18 +64,18 @@ namespace Artbase.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PostId");
+                    b.HasKey("Id");
 
                     b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Artbase.Models.Profile", b =>
                 {
-                    b.Property<int?>("ProfileId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProfileId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("Bio")
                         .IsRequired()
@@ -97,18 +97,18 @@ namespace Artbase.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ProfileId");
+                    b.HasKey("Id");
 
                     b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Artbase.Models.Upload", b =>
                 {
-                    b.Property<int?>("UploadId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UploadId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(max)");
@@ -123,7 +123,7 @@ namespace Artbase.Migrations
                     b.Property<string>("fileUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UploadId");
+                    b.HasKey("Id");
 
                     b.ToTable("Uploads");
                 });

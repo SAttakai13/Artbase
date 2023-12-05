@@ -4,12 +4,12 @@ namespace Artbase.Interfaces
 {
     public interface ISaveUploadToUser
     {
-        void SaveUpload(SaveUploadToUser saveUpload);
+        void SaveUpload(UserSaves saveUpload);
         void DeleteSavedUpload(int? id);
-        IEnumerable<SaveUploadToUser> GetAllSavedUploads();
-        IEnumerable<SaveUploadToUser> GetSavedUploadForUser(string? userid);
-        SaveUploadToUser GetSavedUploadById(int? id);
-        SaveUploadToUser GetSaveUploadByUserAndId(string? userid, int? id);
+        IEnumerable<UserSaves> GetAllSavedUploads();
+        IEnumerable<UserSaves> GetSavedUploadForUser(string? userid);
+        UserSaves GetSavedUploadById(int? id);
+        UserSaves GetSaveUploadByUserAndId(string? userid, int? id);
         
     }
 }

@@ -136,7 +136,7 @@
                                                     <!--Comment Section-->
                                                     <div class="row border-top p-2">
                                                         <div class="container row m-2">
-                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.PostId">
+                                                            <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.Id">
                                                                 <p class="row text-light">Add Comment</p>
                                                                 <div class="row">
                                                                     <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." disabled />

@@ -38,7 +38,7 @@ namespace Artbase.Data
 
         public Post GetPostById(int? postId)
         {
-            Post? foundPost = db.Posts.Where(p => p.PostId == postId).FirstOrDefault();
+            Post? foundPost = db.Posts.Where(p => p.Id == postId).FirstOrDefault();
             return foundPost;
         }
 

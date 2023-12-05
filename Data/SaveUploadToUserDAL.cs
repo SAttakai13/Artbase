@@ -21,18 +21,18 @@ namespace Artbase.Data
             }
         }
 
-        public IEnumerable<SaveUploadToUser> GetAllSavedUploads()
+        public IEnumerable<UserSaves> GetAllSavedUploads()
         {
             return db.UserSaves.ToList();
         }
 
-        public SaveUploadToUser GetSavedUploadById(int? id)
+        public UserSaves GetSavedUploadById(int? id)
         {
-            SaveUploadToUser? foundSaveUploadToUser = db.UserSaves.Where(p => p.SavedId == id).FirstOrDefault();
+            UserSaves? foundSaveUploadToUser = db.UserSaves.Where(p => p.SavedId == id).FirstOrDefault();
             return foundSaveUploadToUser;
         }
 
-        public IEnumerable<SaveUploadToUser> GetSavedUploadForUser(string? userid)
+        public IEnumerable<UserSaves> GetSavedUploadForUser(string? userid)
         {
             if (userid == null)
                 userid = "";
@@ -40,7 +40,7 @@ namespace Artbase.Data
             if (userid == "")
                 GetAllSavedUploads();
 
-            IEnumerable<SaveUploadToUser> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
+            IEnumerable<UserSaves> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
 
             if (lstSavedUserUploads.Count() == 0)
             {
@@ -50,7 +50,7 @@ namespace Artbase.Data
             return lstSavedUserUploads;
         }
 
-        public SaveUploadToUser GetSaveUploadByUserAndId(string? userid, int? uploadid)
+        public UserSaves GetSaveUploadByUserAndId(string? userid, int? uploadid)
         {
             if (userid == null)
                 userid = "";
@@ -61,15 +61,15 @@ namespace Artbase.Data
             if (userid == "" || uploadid == 0)
                 return null;
 
-            IEnumerable<SaveUploadToUser> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
-            SaveUploadToUser? foundUniSave = lstSavedUserUploads.Where(p => p.UploadId == uploadid).FirstOrDefault();
+            IEnumerable<UserSaves> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
+            UserSaves? foundUniSave = lstSavedUserUploads.Where(p => p.UploadId == uploadid).FirstOrDefault();
 
             
 
             return foundUniSave;
         }
 
-        public void SaveUpload(SaveUploadToUser saveUpload)
+        public void SaveUpload(UserSaves saveUpload)
         {
             db.UserSaves.Add(saveUpload);
             db.SaveChanges();

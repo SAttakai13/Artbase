@@ -18,7 +18,6 @@ namespace Artbase.Controllers
         IUserUpload Upl;
         IUserComment Com;
 
-        private int saveNumber { get; set; }
 
 
         public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
@@ -84,7 +83,7 @@ namespace Artbase.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditProfile(int id)
+        public IActionResult EditProfile(int? id)
         {
             
             if (id == null)
@@ -94,7 +93,6 @@ namespace Artbase.Controllers
             }
             else
             {
-                saveNumber = id;
                 Profile proFound = Prof.GetProfileById(id);
                 if (proFound == null)
                 {
@@ -110,11 +108,10 @@ namespace Artbase.Controllers
         {
             
             prof.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            prof.ProfileId = saveNumber;
+            Profile modprofile = prof;
             if (ModelState.IsValid)
             {                
-                Prof.EditProfile(prof);
-                TempData["Edited"] = "Profile Updated";
+                Prof.EditProfile(modprofile);
                 return RedirectToAction("UserProfilePage", "Profile");
             } else
             {

@@ -61,7 +61,7 @@ namespace Artbase.Data
 
         public Profile GetProfileById(int? profileid)
         {
-            Profile? foundProfile = db.Profiles.Where(p => p.ProfileId == profileid).FirstOrDefault();
+            Profile? foundProfile = db.Profiles.Where(p => p.Id == profileid).FirstOrDefault();
             return foundProfile;
         }
 
