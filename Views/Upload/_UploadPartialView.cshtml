@@ -4,5 +4,5 @@
 @using Artbase.Data;
 
 @model Upload
-
 <img class="card-img-top d-block" src="data:@Model.fileTypes;base64,@Convert.ToBase64String(Model.fileContent)" alt="@Model.fileUrl">
+

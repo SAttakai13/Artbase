@@ -25,7 +25,7 @@ namespace Artbase.Controllers
             this.SaveUp = saveup;
         }
 
-        public IEnumerable<Upload> SavedUploadsForUser(string? userId)
+        public IEnumerable<Upload>? SavedUploadsForUser(string? userId)
         {
             IEnumerable<UserSaves> lstofSaved = SaveUp.GetSavedUploadForUser(userId);
             List<Upload> savedUploads = new List<Upload>();

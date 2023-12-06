@@ -79,7 +79,7 @@ else
                                                                                         <a title="Remove Upload" class="col col-md-2 btn btn-outline-danger mx-2" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@ps.UploadId"><i class="bi bi-trash3"></i></a>
                                                                                     }
 
-                                                                                    @if (Model.SavesForUser.Where(x => x.UserId == ps.UserID).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
+                                                                                    @if (Model.SavesForUser.Where(x => x.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
                                                                                     {
                                                                                         <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
                                                                                     }
@@ -107,7 +107,7 @@ else
                                                                                         <a title="Remove Upload" class="col col-md-2 btn btn-outline-danger mx-2" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@ps.UploadId"><i class="bi bi-trash3"></i></a>
                                                                                     }
 
-                                                                                    @if (Model.SavesForUser.Where(x => x.UserId == ps.UserID).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
+                                                                                    @if (Model.SavesForUser.Where(x => x.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
                                                                                     {
                                                                                         <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
                                                                                     }

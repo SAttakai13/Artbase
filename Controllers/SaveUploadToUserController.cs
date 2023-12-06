@@ -25,14 +25,14 @@ namespace Artbase.Controllers
 
 
         [HttpGet]
-        public IActionResult SaveUpload(int id)
+        public IActionResult SaveUpload(int? id)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserSaves usersave = new UserSaves(id, currentUser);
+            UserSaves usersave = new UserSaves((int)id, currentUser);
             if(ModelState.IsValid)
             {
                 saveUp.SaveUpload(usersave);
-                Trace.WriteLine("Posted");
+                return RedirectToAction("ViewAllUploads", "Upload");
                 
             }
             return RedirectToAction("UserProfilePage", "Profile");
@@ -41,17 +41,19 @@ namespace Artbase.Controllers
         [HttpGet]
         public IActionResult RemoveSavedUpload(int? id)
         {
-            if(saveUp.GetSavedUploadById(id) == null)
+            string currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (saveUp.GetSaveUploadByUserAndId(currentUser, id) == null)
             {
                 ModelState.AddModelError("UploadId", "Saved upload not found");
             }
 
             if (ModelState.IsValid)
             {
-                saveUp.DeleteSavedUpload(id);
+                saveUp.DeleteSavedUploadByUserUploadId(id, currentUser);
+                return RedirectToAction("ViewAllUploads", "Upload");                
             }
-
             return RedirectToAction("UserProfilePage", "Profile");
+
         }
     }
 }

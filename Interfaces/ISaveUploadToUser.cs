@@ -9,7 +9,9 @@ namespace Artbase.Interfaces
         IEnumerable<UserSaves>? GetAllSavedUploads();
         IEnumerable<UserSaves> GetSavedUploadForUser(string? userid);
         UserSaves GetSavedUploadById(int? id);
-        bool GetSaveUploadByUserAndId(string? userid, int? id);
-        
+        UserSaves? GetSaveUploadByUserAndId(string? userid, int? id);
+        void DeleteSavedUploadByUserUploadId(int? uploadid, string? userid);
+
+
     }
 }
