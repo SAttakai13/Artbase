@@ -64,11 +64,12 @@
     height: !important 150px;
     object-fit: !important cover;
 }*/
-
-.img-set-size {
-    width: !important auto;
-    height: !important 150px;
-    object-fit: !important cover;
+.img-set-size{
+    min-width: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    max-width: 500px;
+    object-fit: cover;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
@@ -7137,7 +7138,7 @@ textarea.form-control-lg {
 }
 
 .d-block {
-  display: block !important;
+  display: block;
 }
 
 .d-grid {
