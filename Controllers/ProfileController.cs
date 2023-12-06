@@ -17,15 +17,17 @@ namespace Artbase.Controllers
         IUserProfile Prof;
         IUserUpload Upl;
         IUserComment Com;
+        ISaveUploadToUser Save;
 
 
 
-        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com)
+        public ProfileController(IUserProfile userprof, IUserPost userpost, IUserUpload upl, IUserComment com, ISaveUploadToUser save)
         {
             this.Prof = userprof;
             this.Pos = userpost;
             this.Upl = upl;
-            this.Com = com;            
+            this.Com = com;
+            this.Save = save;
         }
 
 
@@ -36,9 +38,10 @@ namespace Artbase.Controllers
         }
 
         [AllowAnonymous]
+        //User Saves are right here
         public IActionResult OtherUserProfilePage(string? id)
         {
-            var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id));
+            var viewModel = new UserProfileandPosts(Pos.GetPostsByUserId(id), Upl.GetUploadsByUserId(id), Com.GetCommentByUser(id), Prof.GetProfileByUserId(id), Save.GetAllSavedUploads());
             return View(viewModel);
         }
 

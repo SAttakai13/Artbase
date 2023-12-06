@@ -11,6 +11,8 @@ namespace Artbase.Controllers
     public class SaveUploadToUserController : Controller
     {
         ISaveUploadToUser saveUp;
+
+
         public SaveUploadToUserController(ISaveUploadToUser saveUp)
         {
             this.saveUp = saveUp;
@@ -21,18 +23,6 @@ namespace Artbase.Controllers
             return View();
         }
 
-        public void CheckIfInDataBase(int? uploadid, string? userid)
-        {
-            
-            if(saveUp.GetSaveUploadByUserAndId(userid, uploadid) != null)
-            {
-                TempData["InDatabase"] = "True";
-            }
-            else
-            {
-                TempData["InDatabase"] = "False";
-            }
-        }
 
         [HttpGet]
         public IActionResult SaveUpload(int id)
@@ -42,7 +32,6 @@ namespace Artbase.Controllers
             if(ModelState.IsValid)
             {
                 saveUp.SaveUpload(usersave);
-                CheckIfInDataBase(id, currentUser);
                 Trace.WriteLine("Posted");
                 
             }

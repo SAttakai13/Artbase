@@ -13,13 +13,15 @@ namespace Artbase.Controllers
         IUserPost Pos;
         IUserProfile Prof;
         IUserUpload Upl;
+        ISaveUploadToUser Save;
 
 
-        public PostController(IUserPost pos, IUserProfile prof, IUserUpload upl)
+        public PostController(IUserPost pos, IUserProfile prof, IUserUpload upl, ISaveUploadToUser save)
         {
             this.Pos = pos;
             this.Prof = prof;
             this.Upl = upl;
+            this.Save = save;
         }
 
         [HttpGet]
@@ -92,9 +94,11 @@ namespace Artbase.Controllers
         }
 
         [AllowAnonymous]
+        //Dashboard
+        //User Saves are right here
         public IActionResult ViewAllPosts()
         {
-            var postsanduploads = new UserProfileandPosts(Pos.GetPosts(), Upl.GetUploads());
+            var postsanduploads = new UserProfileandPosts(Pos.GetPosts(), Upl.GetUploads(), Save.GetAllSavedUploads());
             return View(postsanduploads);
         }
     }

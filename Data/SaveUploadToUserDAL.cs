@@ -50,8 +50,9 @@ namespace Artbase.Data
             return lstSavedUserUploads;
         }
 
-        public UserSaves GetSaveUploadByUserAndId(string? userid, int? uploadid)
+        public bool GetSaveUploadByUserAndId(string? userid, int? uploadid)
         {
+            bool checkisin = false;
             if (userid == null)
                 userid = "";
 
@@ -59,14 +60,17 @@ namespace Artbase.Data
                 uploadid = 0;
 
             if (userid == "" || uploadid == 0)
-                return null;
+                return checkisin;
 
-            IEnumerable<UserSaves> lstSavedUserUploads = GetAllSavedUploads().Where(p => p.UserId == userid).ToList();
-            UserSaves? foundUniSave = lstSavedUserUploads.Where(p => p.UploadId == uploadid).FirstOrDefault();
+            UserSaves? foundUniSave = GetAllSavedUploads().Where(p => p.UserId == userid).Where(p => p.UploadId == uploadid).FirstOrDefault();
 
+            if (foundUniSave != null)
+            {
+                checkisin = true;
+                return checkisin;
+            }
+            return checkisin;
             
-
-            return foundUniSave;
         }
 
         public void SaveUpload(UserSaves saveUpload)

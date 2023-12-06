@@ -30,6 +30,11 @@ namespace Artbase.Controllers
             IEnumerable<UserSaves> lstofSaved = SaveUp.GetSavedUploadForUser(userId);
             List<Upload> savedUploads = new List<Upload>();
 
+            if (lstofSaved == null)
+            {
+                return null;
+            }
+
             foreach (UserSaves save in lstofSaved)
             {
                 Upload upload = Up.GetUploadById(save.UploadId);
@@ -102,11 +107,12 @@ namespace Artbase.Controllers
 
 
         //Still need to read from the database
-        
+        //My Gallery
+        //User Saves are right here
         public IActionResult ViewAllUploads()
         {
             string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var postsanduploads = new UserProfileandPosts(Pos.GetPostsByUserId(user), Up.GetUploadsByUserId(user), SavedUploadsForUser(user));
+            var postsanduploads = new UserProfileandPosts(Pos.GetPostsByUserId(user), Up.GetUploadsByUserId(user), SavedUploadsForUser(user), SaveUp.GetAllSavedUploads());
             return View(postsanduploads);
         }        
 

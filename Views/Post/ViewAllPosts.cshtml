@@ -1,10 +1,12 @@
 ﻿@using System.Security.Claims;
 @model UserProfileandPosts
 @{
-    
     ViewData["Title"] = "Dashboard";
 
+
+    
 }
+
 <section class="gradient-custom-2" style="height:fit-content;">
     <div class="container justify-content-center" style="height:fit-content;">
         <div class="row d-flex justify-content-center align-items-center" style="height:fit-content;">
@@ -31,18 +33,61 @@
                                                 }
                                                 else
                                                 {
-                                                    @foreach (Upload p in Model.UploadsFromUser)
+                                                    @foreach (Upload ps in Model.UploadsFromUser)
                                                     {
-                                                        @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                                        @if (Model.UploadsFromUser.FirstOrDefault() == ps)
                                                         {
                                                             <div class="carousel-item active">
-                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                <div class="card bg-dark justify-content-center align-content-center d-block m-auto" style="height:575px; width:auto;">
+                                                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@ps" />
+                                                                    <div class="card-body container justify-content-center align-content-center" style="height:fit-content">
+                                                                        <div class="row">
+                                                                            <div class="mx-auto">
+                                                                                @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == ps.UserID)
+                                                                                {                                                                                
+                                                                                    <a title="Remove Upload" class="col col-md-2 btn btn-outline-danger mx-2" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@ps.UploadId"><i class="bi bi-trash3"></i></a>
+                                                                                }
+
+                                                                                @if (Model.SavesForUser.Where(x => x.UserId == ps.UserID).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
+                                                                                {
+                                                                                    <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
+                                                                                }
+                                                                                else 
+                                                                                {
+                                                                                    <a title="Save Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="SaveUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus"></i></a>
+                                                                                }
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         }
                                                         else
                                                         {
                                                             <div class="carousel-item">
-                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                <div class="card bg-dark justify-content-center align-content-center d-block m-auto" style="height:575px; width:auto;">
+                                                                    <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@ps" />
+                                                                    <div class="card-body container justify-content-center align-content-center" style="height:fit-content">
+                                                                        <div class="row">
+                                                                            <div class="mx-auto">
+                                                                                @if (User.FindFirst(ClaimTypes.NameIdentifier)?.Value == ps.UserID)
+                                                                                {
+                                                                                    <a title="Remove Upload" class="col col-md-2 btn btn-outline-danger mx-2" style="width:fit-content;" asp-action="DeleteUpload" asp-controller="Upload" asp-route-id="@ps.UploadId"><i class="bi bi-trash3"></i></a>
+                                                                                }
+
+                                                                                @if (Model.SavesForUser.Where(x => x.UserId == ps.UserID).Where(x => x.UploadId == ps.UploadId).FirstOrDefault() != null)
+                                                                                {
+                                                                                    <a title="Unsave Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="RemoveSavedUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus-fill"></i></a>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <a title="Save Post" class="col col-md-2 btn btn-outline-success mx-2" style="width:fit-content;" asp-action="SaveUpload" asp-controller="SaveUploadToUser" asp-route-id="@ps.UploadId"><i class="bi bi-bookmark-plus"></i></a>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         }
                                                     }
