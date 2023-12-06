@@ -27,17 +27,13 @@ namespace Artbase.Controllers
 
         public IEnumerable<Upload> SavedUploadsForUser(string? userId)
         {
-            IEnumerable<UserSaves> lstofSaved = SaveUp.GetAllSavedUploads().Where(p => p.UserId == userId).ToList();
-            IEnumerable<Upload> savedUploads = new List<Upload>();
-
-
-            if (lstofSaved.Count() == 0)
-                return null;
+            IEnumerable<UserSaves> lstofSaved = SaveUp.GetSavedUploadForUser(userId);
+            List<Upload> savedUploads = new List<Upload>();
 
             foreach (UserSaves save in lstofSaved)
             {
                 Upload upload = Up.GetUploadById(save.UploadId);
-                savedUploads.Append(upload);
+                savedUploads.Add(upload);
             }
 
             if (savedUploads.Count() == 0)

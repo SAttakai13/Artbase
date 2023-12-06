@@ -29,18 +29,18 @@
                                                 }
                                                 else
                                                 {
-                                                    @foreach (Upload p in Model.UserSavedUploads)
+                                                    @foreach (Upload ps in Model.UserSavedUploads)
                                                     {
-                                                        @if (Model.UploadsFromUser.FirstOrDefault() == p)
+                                                        @if (Model.UserSavedUploads.FirstOrDefault() == ps)
                                                         {
                                                             <div class="carousel-item active">
-                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@ps" />
                                                             </div>
                                                         }
                                                         else
                                                         {
                                                             <div class="carousel-item">
-                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@p" />
+                                                                <partial name="~/Views/Upload/_UploadPartialView.cshtml" for="@ps" />
                                                             </div>
                                                         }
                                                     }
