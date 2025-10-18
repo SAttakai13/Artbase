@@ -153,7 +153,7 @@ else
                                                                 <form asp-action="AddComment" asp-controller="Comment" asp-area="" method="post" asp-route-id="@p.Id">
                                                                     <p class="row text-light">Add Comment</p>
                                                                     <div class="row">
-                                                                        <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.?message placeholder="Write a comment..." disabled />
+                                                                        <input class="col rounded-pill" type="text" asp-for=@Model.UserComment.message placeholder="Write a comment..." disabled />
                                                                         <button class="col col-md-auto rounded-circle" style="width:fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-send-arrow-up"></i></button>
                                                                     </div>
                                                                 </form>
